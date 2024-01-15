@@ -1,0 +1,25 @@
+name: server
+description: A sample command-line application.
+version: 1.0.0
+# repository: https://github.com/my_org/my_repo
+
+environment:
+  sdk: '>=2.18.2 <3.0.0'
+
+dependencies:
+  dbcrypt: ^2.0.0
+  dotenv: ^4.1.0
+  drift: ^2.14.0
+  fpdart: ^1.1.0
+  grpc: ^3.1.0
+  jose: ^0.3.3
+  protobuf: ^2.1.0
+  slugid: ^1.1.2
+  uuid: ^3.0.7
+
+
+dev_dependencies:
+  build_runner: ^2.4.8
+  drift_dev: ^2.14.1
+  lints: ^2.0.0
+  test: ^1.21.0
