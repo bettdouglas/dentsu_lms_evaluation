@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package lms;
+
+import "google/protobuf/timestamp.proto";
+
+message Agent {
+    int32 id = 1;
+    string name = 2;
+    string email = 3;
+    string role = 4;
+    google.protobuf.Timestamp created_at = 5;
+    google.protobuf.Timestamp updated_at = 6;
+}
+
+message Lead {
+    int32 id = 1;
+    string name = 2;
+    string email = 3;
+    google.protobuf.Timestamp created_at = 4;
+    google.protobuf.Timestamp updated_at = 5;
+    string location = 6;
+    google.protobuf.Timestamp appointment_date = 7;
+    bool is_cancelled = 8;
+    bool is_contacted = 9;
+}
+
+message QuoteSetup {
+    string ageBracket = 1;
+    string inPatientCoverLimit = 2;
+    string spouseCovered = 3;
+    string  numberOfChildren = 4;
+    string coverChildren = 5;
+    string spouseAgeBracket = 6;
+}
+
+message QuoteBenefit {
+    bool inPatient = 1;
+    bool outPatient = 2;
+    bool noCoPayment = 3;
+    bool dental = 4;
+    bool optical = 5;
+    bool maternity = 6;
+    bool lastExpense = 7;
+    bool personalAccident = 8;
+    bool covid19Cover = 9;
+}
+
+message Quote {
+    int32 id = 1;
+    string quote_id = 2;
+    google.protobuf.Timestamp created_at = 3;
+    google.protobuf.Timestamp updated_at = 4;
+    Agent source_agent = 5;
+    Lead lead = 6;
+    string businessUnit = 7;
+    QuoteSetup setup = 8;
+    QuoteBenefit benefits = 9;
+}

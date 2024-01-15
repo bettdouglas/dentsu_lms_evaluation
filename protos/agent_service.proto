@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package lms;
+
+import "models.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/field_mask.proto";
+
+// Generated according to https://cloud.google.com/apis/design/standard_methods
+service AgentService {
+  rpc ListAgents(ListAgentsRequest) returns (ListAgentsResponse) {}
+
+  rpc GetAgent(GetAgentRequest) returns (Agent) {}
+
+  rpc CreateAgent(CreateAgentRequest) returns (CreateAgentResponse) {}
+
+  rpc UpdateAgent(UpdateAgentRequest) returns (Agent){}
+
+  rpc DeleteAgent(DeleteAgentRequest) returns (google.protobuf.Empty) {}
+
+  /// Login a agent with the given agentname and password.
+  // Returns an access token and refresh token upon successful login.
+  rpc Login(LoginRequest) returns (LoginResponse) {}
+}
+
+
+message ListAgentsRequest {
+  int32 page_size = 1;
+  string page_token = 2;
+}
+
+message ListAgentsResponse {
+  repeated Agent agents = 1;
+  string next_page_token = 2;
+}
+
+message GetAgentRequest {
+  int32 id = 1;
+}
+
+message CreateAgentRequest {
+  Agent agent = 1;
+  string password = 2;
+}
+
+message CreateAgentResponse {
+    Agent agent = 1;
+    string jwt = 2;
+}
+
+message UpdateAgentRequest {
+  Agent agent = 1;
+  // The update mask applies to the resource. For the `FieldMask` definition,
+  // see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+  google.protobuf.FieldMask update_mask = 2;
+}
+
+message DeleteAgentRequest {
+  // The resource name of the agent to be deleted.
+  int32 id = 1;
+}
+
+message LoginRequest {
+    string username = 1;
+    string password = 2;
+}
+
+message LoginResponse {
+    string access_token = 1;
+    string refresh_token = 2;
+}
