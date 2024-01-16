@@ -28,8 +28,10 @@ extension AsGrpcLead on db.Lead {
       appointmentDate: appointmentDate != null
           ? Timestamp.fromDateTime(appointmentDate!)
           : null,
-      isCancelled: isCancelled ?? false,
-      isContacted: isContacted ?? false,
+      accountNumber: accountNumber,
+      customerType: customerType,
+      phone: phone,
+      status: status,
     );
   }
 }

@@ -83,7 +83,7 @@ class AgentService extends AgentServiceBase {
 
     final result = await lmsDb.searchAgent(username).getSingleOrNull();
     if (result == null) {
-      throw GrpcError.notFound('Agent with $username not found');
+      throw GrpcError.notFound('Agent called $username not found');
     }
     final passwordsMatch = checkPassword(password, result.password);
     if (passwordsMatch) {
@@ -91,6 +91,26 @@ class AgentService extends AgentServiceBase {
       return LoginResponse(accessToken: jwt);
     }
     throw GrpcError.unauthenticated('Wrong username and password');
+  }
+
+  @override
+  Future<GetAgentFromTokenResponse> getAgentFromToken(
+    ServiceCall call,
+    GetAgentFromTokenRequest request,
+  ) async {
+    final getTokenResult = await getUidFromMetadata(call);
+    return await getTokenResult.fold(
+      (l) => throw GrpcError.failedPrecondition(l),
+      (agentId) async {
+        final agent = await lmsDb.getAgent(agentId).getSingleOrNull();
+        if (agent == null) {
+          throw GrpcError.notFound('Agent with ID $agentId not found');
+        }
+        return GetAgentFromTokenResponse(
+          agent: agent.asGrpcAgent(),
+        );
+      },
+    );
   }
 
   @override

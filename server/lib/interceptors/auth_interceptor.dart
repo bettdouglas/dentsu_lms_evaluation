@@ -6,15 +6,17 @@ Future<GrpcError?> authInterceptor(
   ServiceMethod method,
 ) async {
   final openMethods = [
-    '/bereal.UserService/Login',
-    '/bereal.UserService/CreateUser',
+    '/lms.AgentService/Login',
+    '/lms.AgentService/CreateAgent',
+    '/lms.AgentService/GetAgentFromToken',
   ];
   final metadata = call.clientMetadata ?? {};
   final methodName = metadata[':path'];
   if (openMethods.contains(methodName)) {
     return null;
   }
-  final token = metadata['authorization'];
+  print('Metatada: $metadata');
+  final token = metadata['authentication'];
   if (token == null) {
     return GrpcError.unauthenticated('Token not found');
   }

@@ -15,9 +15,10 @@ LazyDatabase openNativeDatabase(String databaseName) {
 
 LazyDatabase openMemoryDatabase() {
   return LazyDatabase(() async {
-    return NativeDatabase.memory(logStatements: true);
+    return NativeDatabase.memory(logStatements: false);
   });
 }
+
 
 // final database = db.LmsDb(
 //   database: dotEnv.getOrElse(

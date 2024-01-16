@@ -33,14 +33,16 @@ const Lead$json = const {
     const {'1': 'created_at', '3': 4, '4': 1, '5': 11, '6': '.google.protobuf.Timestamp', '10': 'createdAt'},
     const {'1': 'updated_at', '3': 5, '4': 1, '5': 11, '6': '.google.protobuf.Timestamp', '10': 'updatedAt'},
     const {'1': 'location', '3': 6, '4': 1, '5': 9, '10': 'location'},
-    const {'1': 'appointment_date', '3': 7, '4': 1, '5': 11, '6': '.google.protobuf.Timestamp', '10': 'appointmentDate'},
-    const {'1': 'is_cancelled', '3': 8, '4': 1, '5': 8, '10': 'isCancelled'},
-    const {'1': 'is_contacted', '3': 9, '4': 1, '5': 8, '10': 'isContacted'},
+    const {'1': 'status', '3': 7, '4': 1, '5': 9, '10': 'status'},
+    const {'1': 'phone', '3': 8, '4': 1, '5': 9, '10': 'phone'},
+    const {'1': 'accountNumber', '3': 9, '4': 1, '5': 9, '10': 'accountNumber'},
+    const {'1': 'customerType', '3': 10, '4': 1, '5': 9, '10': 'customerType'},
+    const {'1': 'appointment_date', '3': 11, '4': 1, '5': 11, '6': '.google.protobuf.Timestamp', '10': 'appointmentDate'},
   ],
 };
 
 /// Descriptor for `Lead`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List leadDescriptor = $convert.base64Decode('CgRMZWFkEg4KAmlkGAEgASgFUgJpZBISCgRuYW1lGAIgASgJUgRuYW1lEhQKBWVtYWlsGAMgASgJUgVlbWFpbBI5CgpjcmVhdGVkX2F0GAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcFIJY3JlYXRlZEF0EjkKCnVwZGF0ZWRfYXQYBSABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wUgl1cGRhdGVkQXQSGgoIbG9jYXRpb24YBiABKAlSCGxvY2F0aW9uEkUKEGFwcG9pbnRtZW50X2RhdGUYByABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wUg9hcHBvaW50bWVudERhdGUSIQoMaXNfY2FuY2VsbGVkGAggASgIUgtpc0NhbmNlbGxlZBIhCgxpc19jb250YWN0ZWQYCSABKAhSC2lzQ29udGFjdGVk');
+final $typed_data.Uint8List leadDescriptor = $convert.base64Decode('CgRMZWFkEg4KAmlkGAEgASgFUgJpZBISCgRuYW1lGAIgASgJUgRuYW1lEhQKBWVtYWlsGAMgASgJUgVlbWFpbBI5CgpjcmVhdGVkX2F0GAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcFIJY3JlYXRlZEF0EjkKCnVwZGF0ZWRfYXQYBSABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wUgl1cGRhdGVkQXQSGgoIbG9jYXRpb24YBiABKAlSCGxvY2F0aW9uEhYKBnN0YXR1cxgHIAEoCVIGc3RhdHVzEhQKBXBob25lGAggASgJUgVwaG9uZRIkCg1hY2NvdW50TnVtYmVyGAkgASgJUg1hY2NvdW50TnVtYmVyEiIKDGN1c3RvbWVyVHlwZRgKIAEoCVIMY3VzdG9tZXJUeXBlEkUKEGFwcG9pbnRtZW50X2RhdGUYCyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wUg9hcHBvaW50bWVudERhdGU=');
 @$core.Deprecated('Use quoteSetupDescriptor instead')
 const QuoteSetup$json = const {
   '1': 'QuoteSetup',

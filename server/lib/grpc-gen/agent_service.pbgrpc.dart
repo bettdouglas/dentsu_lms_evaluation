@@ -46,6 +46,12 @@ class AgentServiceClient extends $grpc.Client {
       '/lms.AgentService/Login',
       ($0.LoginRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.LoginResponse.fromBuffer(value));
+  static final _$getAgentFromToken = $grpc.ClientMethod<
+          $0.GetAgentFromTokenRequest, $0.GetAgentFromTokenResponse>(
+      '/lms.AgentService/GetAgentFromToken',
+      ($0.GetAgentFromTokenRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) =>
+          $0.GetAgentFromTokenResponse.fromBuffer(value));
 
   AgentServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -82,6 +88,12 @@ class AgentServiceClient extends $grpc.Client {
   $grpc.ResponseFuture<$0.LoginResponse> login($0.LoginRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$login, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.GetAgentFromTokenResponse> getAgentFromToken(
+      $0.GetAgentFromTokenRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$getAgentFromToken, request, options: options);
   }
 }
 
@@ -135,6 +147,15 @@ abstract class AgentServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.LoginRequest.fromBuffer(value),
         ($0.LoginResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.GetAgentFromTokenRequest,
+            $0.GetAgentFromTokenResponse>(
+        'GetAgentFromToken',
+        getAgentFromToken_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $0.GetAgentFromTokenRequest.fromBuffer(value),
+        ($0.GetAgentFromTokenResponse value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.ListAgentsResponse> listAgents_Pre($grpc.ServiceCall call,
@@ -167,6 +188,12 @@ abstract class AgentServiceBase extends $grpc.Service {
     return login(call, await request);
   }
 
+  $async.Future<$0.GetAgentFromTokenResponse> getAgentFromToken_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$0.GetAgentFromTokenRequest> request) async {
+    return getAgentFromToken(call, await request);
+  }
+
   $async.Future<$0.ListAgentsResponse> listAgents(
       $grpc.ServiceCall call, $0.ListAgentsRequest request);
   $async.Future<$1.Agent> getAgent(
@@ -179,4 +206,6 @@ abstract class AgentServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.DeleteAgentRequest request);
   $async.Future<$0.LoginResponse> login(
       $grpc.ServiceCall call, $0.LoginRequest request);
+  $async.Future<$0.GetAgentFromTokenResponse> getAgentFromToken(
+      $grpc.ServiceCall call, $0.GetAgentFromTokenRequest request);
 }

@@ -79,14 +79,14 @@ class InvalidTokenException implements Exception {
 
 Future<Either<String, int>> getUidFromMetadata(ServiceCall serviceCall) async {
   final metadata = serviceCall.clientMetadata ?? {};
-  final token = metadata['Authentication'];
+  print(metadata);
+  final token = metadata['authentication'];
   if (token == null) {
     return left('Missing token header');
   }
   try {
     final claims = await decodeJwt(token);
-    final uid = claims['user_id'] as String;
-    final id = int.tryParse(uid);
+    final id = claims['user_id'];
     if (id == null) {
       return left('Invalid uid');
     } else {

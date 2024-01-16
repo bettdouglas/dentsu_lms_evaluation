@@ -535,3 +535,81 @@ class LoginResponse extends $pb.GeneratedMessage {
   void clearRefreshToken() => clearField(2);
 }
 
+class GetAgentFromTokenRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetAgentFromTokenRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'lms'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  GetAgentFromTokenRequest._() : super();
+  factory GetAgentFromTokenRequest() => create();
+  factory GetAgentFromTokenRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetAgentFromTokenRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GetAgentFromTokenRequest clone() => GetAgentFromTokenRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GetAgentFromTokenRequest copyWith(void Function(GetAgentFromTokenRequest) updates) => super.copyWith((message) => updates(message as GetAgentFromTokenRequest)) as GetAgentFromTokenRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static GetAgentFromTokenRequest create() => GetAgentFromTokenRequest._();
+  GetAgentFromTokenRequest createEmptyInstance() => create();
+  static $pb.PbList<GetAgentFromTokenRequest> createRepeated() => $pb.PbList<GetAgentFromTokenRequest>();
+  @$core.pragma('dart2js:noInline')
+  static GetAgentFromTokenRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetAgentFromTokenRequest>(create);
+  static GetAgentFromTokenRequest? _defaultInstance;
+}
+
+class GetAgentFromTokenResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetAgentFromTokenResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'lms'), createEmptyInstance: create)
+    ..aOM<$1.Agent>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'agent', subBuilder: $1.Agent.create)
+    ..hasRequiredFields = false
+  ;
+
+  GetAgentFromTokenResponse._() : super();
+  factory GetAgentFromTokenResponse({
+    $1.Agent? agent,
+  }) {
+    final _result = create();
+    if (agent != null) {
+      _result.agent = agent;
+    }
+    return _result;
+  }
+  factory GetAgentFromTokenResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetAgentFromTokenResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GetAgentFromTokenResponse clone() => GetAgentFromTokenResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GetAgentFromTokenResponse copyWith(void Function(GetAgentFromTokenResponse) updates) => super.copyWith((message) => updates(message as GetAgentFromTokenResponse)) as GetAgentFromTokenResponse; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static GetAgentFromTokenResponse create() => GetAgentFromTokenResponse._();
+  GetAgentFromTokenResponse createEmptyInstance() => create();
+  static $pb.PbList<GetAgentFromTokenResponse> createRepeated() => $pb.PbList<GetAgentFromTokenResponse>();
+  @$core.pragma('dart2js:noInline')
+  static GetAgentFromTokenResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetAgentFromTokenResponse>(create);
+  static GetAgentFromTokenResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $1.Agent get agent => $_getN(0);
+  @$pb.TagNumber(1)
+  set agent($1.Agent v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasAgent() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearAgent() => clearField(1);
+  @$pb.TagNumber(1)
+  $1.Agent ensureAgent() => $_ensure(0);
+}
+

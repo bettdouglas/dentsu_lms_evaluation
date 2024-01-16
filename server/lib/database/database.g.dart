@@ -406,30 +406,34 @@ class $LeadsTable extends Leads with TableInfo<$LeadsTable, Lead> {
   late final GeneratedColumn<String> location = GeneratedColumn<String>(
       'location', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _statusMeta = const VerificationMeta('status');
+  @override
+  late final GeneratedColumn<String> status = GeneratedColumn<String>(
+      'status', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _phoneMeta = const VerificationMeta('phone');
+  @override
+  late final GeneratedColumn<String> phone = GeneratedColumn<String>(
+      'phone', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _accountNumberMeta =
+      const VerificationMeta('accountNumber');
+  @override
+  late final GeneratedColumn<String> accountNumber = GeneratedColumn<String>(
+      'account_number', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _customerTypeMeta =
+      const VerificationMeta('customerType');
+  @override
+  late final GeneratedColumn<String> customerType = GeneratedColumn<String>(
+      'customer_type', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _appointmentDateMeta =
       const VerificationMeta('appointmentDate');
   @override
   late final GeneratedColumn<DateTime> appointmentDate =
       GeneratedColumn<DateTime>('appointment_date', aliasedName, true,
           type: DriftSqlType.dateTime, requiredDuringInsert: false);
-  static const VerificationMeta _isCancelledMeta =
-      const VerificationMeta('isCancelled');
-  @override
-  late final GeneratedColumn<bool> isCancelled = GeneratedColumn<bool>(
-      'is_cancelled', aliasedName, true,
-      type: DriftSqlType.bool,
-      requiredDuringInsert: false,
-      defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'CHECK ("is_cancelled" IN (0, 1))'));
-  static const VerificationMeta _isContactedMeta =
-      const VerificationMeta('isContacted');
-  @override
-  late final GeneratedColumn<bool> isContacted = GeneratedColumn<bool>(
-      'is_contacted', aliasedName, true,
-      type: DriftSqlType.bool,
-      requiredDuringInsert: false,
-      defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'CHECK ("is_contacted" IN (0, 1))'));
   static const VerificationMeta _sourceAgentIdMeta =
       const VerificationMeta('sourceAgentId');
   @override
@@ -447,9 +451,11 @@ class $LeadsTable extends Leads with TableInfo<$LeadsTable, Lead> {
         name,
         email,
         location,
+        status,
+        phone,
+        accountNumber,
+        customerType,
         appointmentDate,
-        isCancelled,
-        isContacted,
         sourceAgentId
       ];
   @override
@@ -491,23 +497,39 @@ class $LeadsTable extends Leads with TableInfo<$LeadsTable, Lead> {
     } else if (isInserting) {
       context.missing(_locationMeta);
     }
+    if (data.containsKey('status')) {
+      context.handle(_statusMeta,
+          status.isAcceptableOrUnknown(data['status']!, _statusMeta));
+    } else if (isInserting) {
+      context.missing(_statusMeta);
+    }
+    if (data.containsKey('phone')) {
+      context.handle(
+          _phoneMeta, phone.isAcceptableOrUnknown(data['phone']!, _phoneMeta));
+    } else if (isInserting) {
+      context.missing(_phoneMeta);
+    }
+    if (data.containsKey('account_number')) {
+      context.handle(
+          _accountNumberMeta,
+          accountNumber.isAcceptableOrUnknown(
+              data['account_number']!, _accountNumberMeta));
+    } else if (isInserting) {
+      context.missing(_accountNumberMeta);
+    }
+    if (data.containsKey('customer_type')) {
+      context.handle(
+          _customerTypeMeta,
+          customerType.isAcceptableOrUnknown(
+              data['customer_type']!, _customerTypeMeta));
+    } else if (isInserting) {
+      context.missing(_customerTypeMeta);
+    }
     if (data.containsKey('appointment_date')) {
       context.handle(
           _appointmentDateMeta,
           appointmentDate.isAcceptableOrUnknown(
               data['appointment_date']!, _appointmentDateMeta));
-    }
-    if (data.containsKey('is_cancelled')) {
-      context.handle(
-          _isCancelledMeta,
-          isCancelled.isAcceptableOrUnknown(
-              data['is_cancelled']!, _isCancelledMeta));
-    }
-    if (data.containsKey('is_contacted')) {
-      context.handle(
-          _isContactedMeta,
-          isContacted.isAcceptableOrUnknown(
-              data['is_contacted']!, _isContactedMeta));
     }
     if (data.containsKey('source_agent_id')) {
       context.handle(
@@ -538,12 +560,16 @@ class $LeadsTable extends Leads with TableInfo<$LeadsTable, Lead> {
           .read(DriftSqlType.string, data['${effectivePrefix}email'])!,
       location: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}location'])!,
+      status: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}status'])!,
+      phone: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}phone'])!,
+      accountNumber: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}account_number'])!,
+      customerType: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}customer_type'])!,
       appointmentDate: attachedDatabase.typeMapping.read(
           DriftSqlType.dateTime, data['${effectivePrefix}appointment_date']),
-      isCancelled: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}is_cancelled']),
-      isContacted: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}is_contacted']),
       sourceAgentId: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}source_agent_id'])!,
     );
@@ -563,9 +589,11 @@ class Lead extends DataClass implements Insertable<Lead> {
   final String name;
   final String email;
   final String location;
+  final String status;
+  final String phone;
+  final String accountNumber;
+  final String customerType;
   final DateTime? appointmentDate;
-  final bool? isCancelled;
-  final bool? isContacted;
   final int sourceAgentId;
   const Lead(
       {required this.id,
@@ -574,9 +602,11 @@ class Lead extends DataClass implements Insertable<Lead> {
       required this.name,
       required this.email,
       required this.location,
+      required this.status,
+      required this.phone,
+      required this.accountNumber,
+      required this.customerType,
       this.appointmentDate,
-      this.isCancelled,
-      this.isContacted,
       required this.sourceAgentId});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -589,14 +619,12 @@ class Lead extends DataClass implements Insertable<Lead> {
     map['name'] = Variable<String>(name);
     map['email'] = Variable<String>(email);
     map['location'] = Variable<String>(location);
+    map['status'] = Variable<String>(status);
+    map['phone'] = Variable<String>(phone);
+    map['account_number'] = Variable<String>(accountNumber);
+    map['customer_type'] = Variable<String>(customerType);
     if (!nullToAbsent || appointmentDate != null) {
       map['appointment_date'] = Variable<DateTime>(appointmentDate);
-    }
-    if (!nullToAbsent || isCancelled != null) {
-      map['is_cancelled'] = Variable<bool>(isCancelled);
-    }
-    if (!nullToAbsent || isContacted != null) {
-      map['is_contacted'] = Variable<bool>(isContacted);
     }
     map['source_agent_id'] = Variable<int>(sourceAgentId);
     return map;
@@ -612,15 +640,13 @@ class Lead extends DataClass implements Insertable<Lead> {
       name: Value(name),
       email: Value(email),
       location: Value(location),
+      status: Value(status),
+      phone: Value(phone),
+      accountNumber: Value(accountNumber),
+      customerType: Value(customerType),
       appointmentDate: appointmentDate == null && nullToAbsent
           ? const Value.absent()
           : Value(appointmentDate),
-      isCancelled: isCancelled == null && nullToAbsent
-          ? const Value.absent()
-          : Value(isCancelled),
-      isContacted: isContacted == null && nullToAbsent
-          ? const Value.absent()
-          : Value(isContacted),
       sourceAgentId: Value(sourceAgentId),
     );
   }
@@ -635,9 +661,11 @@ class Lead extends DataClass implements Insertable<Lead> {
       name: serializer.fromJson<String>(json['name']),
       email: serializer.fromJson<String>(json['email']),
       location: serializer.fromJson<String>(json['location']),
+      status: serializer.fromJson<String>(json['status']),
+      phone: serializer.fromJson<String>(json['phone']),
+      accountNumber: serializer.fromJson<String>(json['accountNumber']),
+      customerType: serializer.fromJson<String>(json['customerType']),
       appointmentDate: serializer.fromJson<DateTime?>(json['appointmentDate']),
-      isCancelled: serializer.fromJson<bool?>(json['isCancelled']),
-      isContacted: serializer.fromJson<bool?>(json['isContacted']),
       sourceAgentId: serializer.fromJson<int>(json['sourceAgentId']),
     );
   }
@@ -651,9 +679,11 @@ class Lead extends DataClass implements Insertable<Lead> {
       'name': serializer.toJson<String>(name),
       'email': serializer.toJson<String>(email),
       'location': serializer.toJson<String>(location),
+      'status': serializer.toJson<String>(status),
+      'phone': serializer.toJson<String>(phone),
+      'accountNumber': serializer.toJson<String>(accountNumber),
+      'customerType': serializer.toJson<String>(customerType),
       'appointmentDate': serializer.toJson<DateTime?>(appointmentDate),
-      'isCancelled': serializer.toJson<bool?>(isCancelled),
-      'isContacted': serializer.toJson<bool?>(isContacted),
       'sourceAgentId': serializer.toJson<int>(sourceAgentId),
     };
   }
@@ -665,9 +695,11 @@ class Lead extends DataClass implements Insertable<Lead> {
           String? name,
           String? email,
           String? location,
+          String? status,
+          String? phone,
+          String? accountNumber,
+          String? customerType,
           Value<DateTime?> appointmentDate = const Value.absent(),
-          Value<bool?> isCancelled = const Value.absent(),
-          Value<bool?> isContacted = const Value.absent(),
           int? sourceAgentId}) =>
       Lead(
         id: id ?? this.id,
@@ -676,11 +708,13 @@ class Lead extends DataClass implements Insertable<Lead> {
         name: name ?? this.name,
         email: email ?? this.email,
         location: location ?? this.location,
+        status: status ?? this.status,
+        phone: phone ?? this.phone,
+        accountNumber: accountNumber ?? this.accountNumber,
+        customerType: customerType ?? this.customerType,
         appointmentDate: appointmentDate.present
             ? appointmentDate.value
             : this.appointmentDate,
-        isCancelled: isCancelled.present ? isCancelled.value : this.isCancelled,
-        isContacted: isContacted.present ? isContacted.value : this.isContacted,
         sourceAgentId: sourceAgentId ?? this.sourceAgentId,
       );
   @override
@@ -692,17 +726,30 @@ class Lead extends DataClass implements Insertable<Lead> {
           ..write('name: $name, ')
           ..write('email: $email, ')
           ..write('location: $location, ')
+          ..write('status: $status, ')
+          ..write('phone: $phone, ')
+          ..write('accountNumber: $accountNumber, ')
+          ..write('customerType: $customerType, ')
           ..write('appointmentDate: $appointmentDate, ')
-          ..write('isCancelled: $isCancelled, ')
-          ..write('isContacted: $isContacted, ')
           ..write('sourceAgentId: $sourceAgentId')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, createdAt, updatedAt, name, email,
-      location, appointmentDate, isCancelled, isContacted, sourceAgentId);
+  int get hashCode => Object.hash(
+      id,
+      createdAt,
+      updatedAt,
+      name,
+      email,
+      location,
+      status,
+      phone,
+      accountNumber,
+      customerType,
+      appointmentDate,
+      sourceAgentId);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -713,9 +760,11 @@ class Lead extends DataClass implements Insertable<Lead> {
           other.name == this.name &&
           other.email == this.email &&
           other.location == this.location &&
+          other.status == this.status &&
+          other.phone == this.phone &&
+          other.accountNumber == this.accountNumber &&
+          other.customerType == this.customerType &&
           other.appointmentDate == this.appointmentDate &&
-          other.isCancelled == this.isCancelled &&
-          other.isContacted == this.isContacted &&
           other.sourceAgentId == this.sourceAgentId);
 }
 
@@ -726,9 +775,11 @@ class LeadsCompanion extends UpdateCompanion<Lead> {
   final Value<String> name;
   final Value<String> email;
   final Value<String> location;
+  final Value<String> status;
+  final Value<String> phone;
+  final Value<String> accountNumber;
+  final Value<String> customerType;
   final Value<DateTime?> appointmentDate;
-  final Value<bool?> isCancelled;
-  final Value<bool?> isContacted;
   final Value<int> sourceAgentId;
   const LeadsCompanion({
     this.id = const Value.absent(),
@@ -737,9 +788,11 @@ class LeadsCompanion extends UpdateCompanion<Lead> {
     this.name = const Value.absent(),
     this.email = const Value.absent(),
     this.location = const Value.absent(),
+    this.status = const Value.absent(),
+    this.phone = const Value.absent(),
+    this.accountNumber = const Value.absent(),
+    this.customerType = const Value.absent(),
     this.appointmentDate = const Value.absent(),
-    this.isCancelled = const Value.absent(),
-    this.isContacted = const Value.absent(),
     this.sourceAgentId = const Value.absent(),
   });
   LeadsCompanion.insert({
@@ -749,13 +802,19 @@ class LeadsCompanion extends UpdateCompanion<Lead> {
     required String name,
     required String email,
     required String location,
+    required String status,
+    required String phone,
+    required String accountNumber,
+    required String customerType,
     this.appointmentDate = const Value.absent(),
-    this.isCancelled = const Value.absent(),
-    this.isContacted = const Value.absent(),
     required int sourceAgentId,
   })  : name = Value(name),
         email = Value(email),
         location = Value(location),
+        status = Value(status),
+        phone = Value(phone),
+        accountNumber = Value(accountNumber),
+        customerType = Value(customerType),
         sourceAgentId = Value(sourceAgentId);
   static Insertable<Lead> custom({
     Expression<int>? id,
@@ -764,9 +823,11 @@ class LeadsCompanion extends UpdateCompanion<Lead> {
     Expression<String>? name,
     Expression<String>? email,
     Expression<String>? location,
+    Expression<String>? status,
+    Expression<String>? phone,
+    Expression<String>? accountNumber,
+    Expression<String>? customerType,
     Expression<DateTime>? appointmentDate,
-    Expression<bool>? isCancelled,
-    Expression<bool>? isContacted,
     Expression<int>? sourceAgentId,
   }) {
     return RawValuesInsertable({
@@ -776,9 +837,11 @@ class LeadsCompanion extends UpdateCompanion<Lead> {
       if (name != null) 'name': name,
       if (email != null) 'email': email,
       if (location != null) 'location': location,
+      if (status != null) 'status': status,
+      if (phone != null) 'phone': phone,
+      if (accountNumber != null) 'account_number': accountNumber,
+      if (customerType != null) 'customer_type': customerType,
       if (appointmentDate != null) 'appointment_date': appointmentDate,
-      if (isCancelled != null) 'is_cancelled': isCancelled,
-      if (isContacted != null) 'is_contacted': isContacted,
       if (sourceAgentId != null) 'source_agent_id': sourceAgentId,
     });
   }
@@ -790,9 +853,11 @@ class LeadsCompanion extends UpdateCompanion<Lead> {
       Value<String>? name,
       Value<String>? email,
       Value<String>? location,
+      Value<String>? status,
+      Value<String>? phone,
+      Value<String>? accountNumber,
+      Value<String>? customerType,
       Value<DateTime?>? appointmentDate,
-      Value<bool?>? isCancelled,
-      Value<bool?>? isContacted,
       Value<int>? sourceAgentId}) {
     return LeadsCompanion(
       id: id ?? this.id,
@@ -801,9 +866,11 @@ class LeadsCompanion extends UpdateCompanion<Lead> {
       name: name ?? this.name,
       email: email ?? this.email,
       location: location ?? this.location,
+      status: status ?? this.status,
+      phone: phone ?? this.phone,
+      accountNumber: accountNumber ?? this.accountNumber,
+      customerType: customerType ?? this.customerType,
       appointmentDate: appointmentDate ?? this.appointmentDate,
-      isCancelled: isCancelled ?? this.isCancelled,
-      isContacted: isContacted ?? this.isContacted,
       sourceAgentId: sourceAgentId ?? this.sourceAgentId,
     );
   }
@@ -829,14 +896,20 @@ class LeadsCompanion extends UpdateCompanion<Lead> {
     if (location.present) {
       map['location'] = Variable<String>(location.value);
     }
+    if (status.present) {
+      map['status'] = Variable<String>(status.value);
+    }
+    if (phone.present) {
+      map['phone'] = Variable<String>(phone.value);
+    }
+    if (accountNumber.present) {
+      map['account_number'] = Variable<String>(accountNumber.value);
+    }
+    if (customerType.present) {
+      map['customer_type'] = Variable<String>(customerType.value);
+    }
     if (appointmentDate.present) {
       map['appointment_date'] = Variable<DateTime>(appointmentDate.value);
-    }
-    if (isCancelled.present) {
-      map['is_cancelled'] = Variable<bool>(isCancelled.value);
-    }
-    if (isContacted.present) {
-      map['is_contacted'] = Variable<bool>(isContacted.value);
     }
     if (sourceAgentId.present) {
       map['source_agent_id'] = Variable<int>(sourceAgentId.value);
@@ -853,9 +926,11 @@ class LeadsCompanion extends UpdateCompanion<Lead> {
           ..write('name: $name, ')
           ..write('email: $email, ')
           ..write('location: $location, ')
+          ..write('status: $status, ')
+          ..write('phone: $phone, ')
+          ..write('accountNumber: $accountNumber, ')
+          ..write('customerType: $customerType, ')
           ..write('appointmentDate: $appointmentDate, ')
-          ..write('isCancelled: $isCancelled, ')
-          ..write('isContacted: $isContacted, ')
           ..write('sourceAgentId: $sourceAgentId')
           ..write(')'))
         .toString();

@@ -140,9 +140,11 @@ class Lead extends $pb.GeneratedMessage {
     ..aOM<$0.Timestamp>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'createdAt', subBuilder: $0.Timestamp.create)
     ..aOM<$0.Timestamp>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'updatedAt', subBuilder: $0.Timestamp.create)
     ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'location')
-    ..aOM<$0.Timestamp>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'appointmentDate', subBuilder: $0.Timestamp.create)
-    ..aOB(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'isCancelled')
-    ..aOB(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'isContacted')
+    ..aOS(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'status')
+    ..aOS(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'phone')
+    ..aOS(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'accountNumber', protoName: 'accountNumber')
+    ..aOS(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'customerType', protoName: 'customerType')
+    ..aOM<$0.Timestamp>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'appointmentDate', subBuilder: $0.Timestamp.create)
     ..hasRequiredFields = false
   ;
 
@@ -154,9 +156,11 @@ class Lead extends $pb.GeneratedMessage {
     $0.Timestamp? createdAt,
     $0.Timestamp? updatedAt,
     $core.String? location,
+    $core.String? status,
+    $core.String? phone,
+    $core.String? accountNumber,
+    $core.String? customerType,
     $0.Timestamp? appointmentDate,
-    $core.bool? isCancelled,
-    $core.bool? isContacted,
   }) {
     final _result = create();
     if (id != null) {
@@ -177,14 +181,20 @@ class Lead extends $pb.GeneratedMessage {
     if (location != null) {
       _result.location = location;
     }
+    if (status != null) {
+      _result.status = status;
+    }
+    if (phone != null) {
+      _result.phone = phone;
+    }
+    if (accountNumber != null) {
+      _result.accountNumber = accountNumber;
+    }
+    if (customerType != null) {
+      _result.customerType = customerType;
+    }
     if (appointmentDate != null) {
       _result.appointmentDate = appointmentDate;
-    }
-    if (isCancelled != null) {
-      _result.isCancelled = isCancelled;
-    }
-    if (isContacted != null) {
-      _result.isContacted = isContacted;
     }
     return _result;
   }
@@ -268,33 +278,51 @@ class Lead extends $pb.GeneratedMessage {
   void clearLocation() => clearField(6);
 
   @$pb.TagNumber(7)
-  $0.Timestamp get appointmentDate => $_getN(6);
+  $core.String get status => $_getSZ(6);
   @$pb.TagNumber(7)
-  set appointmentDate($0.Timestamp v) { setField(7, v); }
+  set status($core.String v) { $_setString(6, v); }
   @$pb.TagNumber(7)
-  $core.bool hasAppointmentDate() => $_has(6);
+  $core.bool hasStatus() => $_has(6);
   @$pb.TagNumber(7)
-  void clearAppointmentDate() => clearField(7);
-  @$pb.TagNumber(7)
-  $0.Timestamp ensureAppointmentDate() => $_ensure(6);
+  void clearStatus() => clearField(7);
 
   @$pb.TagNumber(8)
-  $core.bool get isCancelled => $_getBF(7);
+  $core.String get phone => $_getSZ(7);
   @$pb.TagNumber(8)
-  set isCancelled($core.bool v) { $_setBool(7, v); }
+  set phone($core.String v) { $_setString(7, v); }
   @$pb.TagNumber(8)
-  $core.bool hasIsCancelled() => $_has(7);
+  $core.bool hasPhone() => $_has(7);
   @$pb.TagNumber(8)
-  void clearIsCancelled() => clearField(8);
+  void clearPhone() => clearField(8);
 
   @$pb.TagNumber(9)
-  $core.bool get isContacted => $_getBF(8);
+  $core.String get accountNumber => $_getSZ(8);
   @$pb.TagNumber(9)
-  set isContacted($core.bool v) { $_setBool(8, v); }
+  set accountNumber($core.String v) { $_setString(8, v); }
   @$pb.TagNumber(9)
-  $core.bool hasIsContacted() => $_has(8);
+  $core.bool hasAccountNumber() => $_has(8);
   @$pb.TagNumber(9)
-  void clearIsContacted() => clearField(9);
+  void clearAccountNumber() => clearField(9);
+
+  @$pb.TagNumber(10)
+  $core.String get customerType => $_getSZ(9);
+  @$pb.TagNumber(10)
+  set customerType($core.String v) { $_setString(9, v); }
+  @$pb.TagNumber(10)
+  $core.bool hasCustomerType() => $_has(9);
+  @$pb.TagNumber(10)
+  void clearCustomerType() => clearField(10);
+
+  @$pb.TagNumber(11)
+  $0.Timestamp get appointmentDate => $_getN(10);
+  @$pb.TagNumber(11)
+  set appointmentDate($0.Timestamp v) { setField(11, v); }
+  @$pb.TagNumber(11)
+  $core.bool hasAppointmentDate() => $_has(10);
+  @$pb.TagNumber(11)
+  void clearAppointmentDate() => clearField(11);
+  @$pb.TagNumber(11)
+  $0.Timestamp ensureAppointmentDate() => $_ensure(10);
 }
 
 class QuoteSetup extends $pb.GeneratedMessage {

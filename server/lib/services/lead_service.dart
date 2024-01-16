@@ -24,11 +24,18 @@ class LeadService extends LeadServiceBase {
         final name = lead.name;
         final email = lead.email;
         final location = lead.location;
+        final phone = lead.phone;
+        final accountNumber = lead.accountNumber;
+        final customerType = lead.customerType;
+
         final savedLead = await lmsDb.addLead(
           name: name,
           email: email,
           location: location,
           agentId: agentId,
+          accountNumber: accountNumber,
+          customerType: customerType,
+          phone: phone,
         );
         return CreateLeadResponse(lead: savedLead.asGrpcLead());
       },

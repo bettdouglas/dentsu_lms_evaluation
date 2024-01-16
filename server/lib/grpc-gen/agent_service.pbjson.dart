@@ -105,3 +105,20 @@ const LoginResponse$json = const {
 
 /// Descriptor for `LoginResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List loginResponseDescriptor = $convert.base64Decode('Cg1Mb2dpblJlc3BvbnNlEiEKDGFjY2Vzc190b2tlbhgBIAEoCVILYWNjZXNzVG9rZW4SIwoNcmVmcmVzaF90b2tlbhgCIAEoCVIMcmVmcmVzaFRva2Vu');
+@$core.Deprecated('Use getAgentFromTokenRequestDescriptor instead')
+const GetAgentFromTokenRequest$json = const {
+  '1': 'GetAgentFromTokenRequest',
+};
+
+/// Descriptor for `GetAgentFromTokenRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getAgentFromTokenRequestDescriptor = $convert.base64Decode('ChhHZXRBZ2VudEZyb21Ub2tlblJlcXVlc3Q=');
+@$core.Deprecated('Use getAgentFromTokenResponseDescriptor instead')
+const GetAgentFromTokenResponse$json = const {
+  '1': 'GetAgentFromTokenResponse',
+  '2': const [
+    const {'1': 'agent', '3': 1, '4': 1, '5': 11, '6': '.lms.Agent', '10': 'agent'},
+  ],
+};
+
+/// Descriptor for `GetAgentFromTokenResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getAgentFromTokenResponseDescriptor = $convert.base64Decode('ChlHZXRBZ2VudEZyb21Ub2tlblJlc3BvbnNlEiAKBWFnZW50GAEgASgLMgoubG1zLkFnZW50UgVhZ2VudA==');

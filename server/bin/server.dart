@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:grpc/grpc.dart';
 import 'package:server/database/database.dart' as db;
-import 'package:server/database/database_io.dart';
+import 'package:server/database/utils.dart';
 import 'package:server/interceptors/auth_interceptor.dart';
 import 'package:server/services/agent_service.dart';
 import 'package:server/services/lead_service.dart';
@@ -25,7 +25,7 @@ void main(List<String> arguments) async {
   );
 
   final ip = InternetAddress.anyIPv4;
-  final port = int.parse(dotEnv.getOrElse('PORT', () => '8087'));
+  final port = int.parse(dotEnv.getOrElse('PORT', () => '8181'));
 
   await server.serve(address: ip, port: port);
 

@@ -33,9 +33,11 @@ class Leads extends GenericTable {
   TextColumn get name => text()();
   TextColumn get email => text()();
   TextColumn get location => text()();
+  TextColumn get status => text()();
+  TextColumn get phone => text()();
+  TextColumn get accountNumber => text()();
+  TextColumn get customerType => text()();
   DateTimeColumn get appointmentDate => dateTime().nullable()();
-  BoolColumn get isCancelled => boolean().nullable()();
-  BoolColumn get isContacted => boolean().nullable()();
   IntColumn get sourceAgentId => integer().references(Agents, #id)();
 }
 
@@ -132,8 +134,8 @@ class LmsDb extends _$LmsDb {
     return select(leads)..where((tbl) => tbl.id.equals(id));
   }
 
-  MultiSelectable<Lead> watchLeads(List<int> id) {
-    return select(leads)..where((tbl) => tbl.id.isIn(id));
+  MultiSelectable<Lead> watchAgentLeads(int agentId) {
+    return select(leads)..where((tbl) => tbl.sourceAgentId.equals(agentId));
   }
 
   MultiSelectable<Lead> getAgentLeads(int agentId) {
@@ -145,6 +147,9 @@ class LmsDb extends _$LmsDb {
     required String email,
     required String location,
     required int agentId,
+    required String phone,
+    required String accountNumber,
+    required String customerType,
   }) async {
     final result = await into(leads).insert(
       LeadsCompanion.insert(
@@ -152,6 +157,10 @@ class LmsDb extends _$LmsDb {
         email: email,
         location: location,
         sourceAgentId: agentId,
+        accountNumber: accountNumber,
+        customerType: customerType,
+        phone: phone,
+        status: 'New',
       ),
     );
     return getLead(result).getSingleOrNull().then((value) => value!);
