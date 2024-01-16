@@ -5,10 +5,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lms_app/src/authentication/auth/auth.dart';
-import 'package:lms_app/src/authentication/login/login.dart';
-import 'package:lms_app/src/authentication/sign_up/sign_up.dart';
-import 'package:lms_app/src/common/grpc-gen/agent_service.pbgrpc.dart';
+import 'package:lms_app/features/active_page/bloc/active_page_bloc.dart';
+import 'package:lms_app/features/authentication/auth/auth.dart';
+import 'package:lms_app/features/authentication/login/login.dart';
+import 'package:lms_app/features/authentication/sign_up/sign_up.dart';
+import 'package:lms_app/features/common/grpc-gen/agent_service.pbgrpc.dart';
+import 'package:lms_app/features/common/grpc-gen/interceptors.dart';
+import 'package:lms_app/features/common/grpc-gen/lead_service.pbgrpc.dart';
+import 'package:lms_app/features/common/grpc-gen/quote_benefit_service.pbgrpc.dart';
+import 'package:lms_app/features/common/grpc-gen/quote_setup_service.pbgrpc.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -26,16 +31,30 @@ class App extends StatelessWidget {
       agentServiceClient: AgentServiceClient(channel),
     );
 
+    final authRepository = AuthRepository(authProvider: authProvider);
+
+    final interceptors = [TokenClientInterceptor(authRepository)];
+
+    final clients = [
+      AgentServiceClient(channel, interceptors: interceptors),
+      LeadServiceClient(channel, interceptors: interceptors),
+      QuoteBenefitServiceClient(channel, interceptors: interceptors),
+      QuoteSetupServiceClient(channel, interceptors: interceptors),
+    ];
+
     const schemeColor = FlexScheme.bahamaBlue;
     final textStyle = GoogleFonts.dmSans();
 
     return ScreenUtilInit(
       designSize: const Size(428, 932),
-      builder: (context, _) => RepositoryProvider<AuthRepository>(
-        create: (context) => AuthRepository(
-          authProvider: authProvider,
-        ),
-        lazy: false,
+      builder: (context, _) => MultiRepositoryProvider(
+        providers: [
+          RepositoryProvider<AuthRepository>(
+            create: (context) => authRepository,
+            lazy: false,
+          ),
+          ...clients.map((e) => RepositoryProvider(create: (context) => e)),
+        ],
         child: MultiBlocProvider(
           providers: [
             BlocProvider(
@@ -48,6 +67,7 @@ class App extends StatelessWidget {
                 authRepository: context.read<AuthRepository>(),
               ),
             ),
+            BlocProvider(create: (_) => ActivePageBloc()),
           ],
           child: MaterialApp(
             theme: FlexThemeData.light(
