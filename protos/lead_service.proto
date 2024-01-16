@@ -8,16 +8,16 @@ import "google/protobuf/field_mask.proto";
 
 // Generated according to https://cloud.google.com/apis/design/standard_methods
 service LeadService {
+  
   rpc ListLeads(ListLeadsRequest) returns (ListLeadsResponse) {}
 
   rpc GetLead(GetLeadRequest) returns (Lead) {}
-
+  
   rpc CreateLead(CreateLeadRequest) returns (CreateLeadResponse) {}
-
+  
   rpc UpdateLead(UpdateLeadRequest) returns (Lead){}
-
+  
   rpc DeleteLead(DeleteLeadRequest) returns (google.protobuf.Empty) {}
-
   /// Login a lead with the given leadname and password.
   // Returns an access token and refresh token upon successful login.
   // rpc Login(LoginRequest) returns (LoginResponse) {}

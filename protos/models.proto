@@ -20,9 +20,11 @@ message Lead {
     google.protobuf.Timestamp created_at = 4;
     google.protobuf.Timestamp updated_at = 5;
     string location = 6;
-    google.protobuf.Timestamp appointment_date = 7;
-    bool is_cancelled = 8;
-    bool is_contacted = 9;
+    string status = 7;
+    string phone = 8;
+    string accountNumber = 9;
+    string customerType = 10;
+    google.protobuf.Timestamp appointment_date = 11;
 }
 
 message QuoteSetup {
