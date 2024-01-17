@@ -20,7 +20,7 @@ mixin _$CreateLeadEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function(String name, String email, String location,
-            String phone, String customerType)
+            String phone, String customerType, String product)
         saveNewLead,
   }) =>
       throw _privateConstructorUsedError;
@@ -28,7 +28,7 @@ mixin _$CreateLeadEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function(String name, String email, String location, String phone,
-            String customerType)?
+            String customerType, String product)?
         saveNewLead,
   }) =>
       throw _privateConstructorUsedError;
@@ -36,7 +36,7 @@ mixin _$CreateLeadEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function(String name, String email, String location, String phone,
-            String customerType)?
+            String customerType, String product)?
         saveNewLead,
     required TResult orElse(),
   }) =>
@@ -120,7 +120,7 @@ class _$StartedImpl implements _Started {
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function(String name, String email, String location,
-            String phone, String customerType)
+            String phone, String customerType, String product)
         saveNewLead,
   }) {
     return started();
@@ -131,7 +131,7 @@ class _$StartedImpl implements _Started {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function(String name, String email, String location, String phone,
-            String customerType)?
+            String customerType, String product)?
         saveNewLead,
   }) {
     return started?.call();
@@ -142,7 +142,7 @@ class _$StartedImpl implements _Started {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function(String name, String email, String location, String phone,
-            String customerType)?
+            String customerType, String product)?
         saveNewLead,
     required TResult orElse(),
   }) {
@@ -199,7 +199,8 @@ abstract class _$$SaveNewLeadImplCopyWith<$Res> {
       String email,
       String location,
       String phone,
-      String customerType});
+      String customerType,
+      String product});
 }
 
 /// @nodoc
@@ -218,6 +219,7 @@ class __$$SaveNewLeadImplCopyWithImpl<$Res>
     Object? location = null,
     Object? phone = null,
     Object? customerType = null,
+    Object? product = null,
   }) {
     return _then(_$SaveNewLeadImpl(
       name: null == name
@@ -240,6 +242,10 @@ class __$$SaveNewLeadImplCopyWithImpl<$Res>
           ? _value.customerType
           : customerType // ignore: cast_nullable_to_non_nullable
               as String,
+      product: null == product
+          ? _value.product
+          : product // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -252,7 +258,8 @@ class _$SaveNewLeadImpl implements _SaveNewLead {
       required this.email,
       required this.location,
       required this.phone,
-      required this.customerType});
+      required this.customerType,
+      required this.product});
 
   @override
   final String name;
@@ -264,10 +271,12 @@ class _$SaveNewLeadImpl implements _SaveNewLead {
   final String phone;
   @override
   final String customerType;
+  @override
+  final String product;
 
   @override
   String toString() {
-    return 'CreateLeadEvent.saveNewLead(name: $name, email: $email, location: $location, phone: $phone, customerType: $customerType)';
+    return 'CreateLeadEvent.saveNewLead(name: $name, email: $email, location: $location, phone: $phone, customerType: $customerType, product: $product)';
   }
 
   @override
@@ -281,12 +290,13 @@ class _$SaveNewLeadImpl implements _SaveNewLead {
                 other.location == location) &&
             (identical(other.phone, phone) || other.phone == phone) &&
             (identical(other.customerType, customerType) ||
-                other.customerType == customerType));
+                other.customerType == customerType) &&
+            (identical(other.product, product) || other.product == product));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, name, email, location, phone, customerType);
+  int get hashCode => Object.hash(
+      runtimeType, name, email, location, phone, customerType, product);
 
   @JsonKey(ignore: true)
   @override
@@ -299,10 +309,10 @@ class _$SaveNewLeadImpl implements _SaveNewLead {
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function(String name, String email, String location,
-            String phone, String customerType)
+            String phone, String customerType, String product)
         saveNewLead,
   }) {
-    return saveNewLead(name, email, location, phone, customerType);
+    return saveNewLead(name, email, location, phone, customerType, product);
   }
 
   @override
@@ -310,10 +320,11 @@ class _$SaveNewLeadImpl implements _SaveNewLead {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function(String name, String email, String location, String phone,
-            String customerType)?
+            String customerType, String product)?
         saveNewLead,
   }) {
-    return saveNewLead?.call(name, email, location, phone, customerType);
+    return saveNewLead?.call(
+        name, email, location, phone, customerType, product);
   }
 
   @override
@@ -321,12 +332,12 @@ class _$SaveNewLeadImpl implements _SaveNewLead {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function(String name, String email, String location, String phone,
-            String customerType)?
+            String customerType, String product)?
         saveNewLead,
     required TResult orElse(),
   }) {
     if (saveNewLead != null) {
-      return saveNewLead(name, email, location, phone, customerType);
+      return saveNewLead(name, email, location, phone, customerType, product);
     }
     return orElse();
   }
@@ -369,13 +380,15 @@ abstract class _SaveNewLead implements CreateLeadEvent {
       required final String email,
       required final String location,
       required final String phone,
-      required final String customerType}) = _$SaveNewLeadImpl;
+      required final String customerType,
+      required final String product}) = _$SaveNewLeadImpl;
 
   String get name;
   String get email;
   String get location;
   String get phone;
   String get customerType;
+  String get product;
   @JsonKey(ignore: true)
   _$$SaveNewLeadImplCopyWith<_$SaveNewLeadImpl> get copyWith =>
       throw _privateConstructorUsedError;

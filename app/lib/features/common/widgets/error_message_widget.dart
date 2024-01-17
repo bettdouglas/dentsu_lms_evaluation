@@ -19,10 +19,13 @@ class ErrorMessageWidgetWithRetry extends StatelessWidget {
     super.key,
     required this.onRetry,
     this.retryText = 'Retry',
+    this.actions = const <Widget>[],
   });
   final String errorMessage;
   final String retryText;
   final VoidCallback onRetry;
+  final List<Widget> actions;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -42,6 +45,8 @@ class ErrorMessageWidgetWithRetry extends StatelessWidget {
             child: Text(retryText),
           ),
         ),
+        const SizedBox(height: 20),
+        ...actions,
       ],
     );
   }

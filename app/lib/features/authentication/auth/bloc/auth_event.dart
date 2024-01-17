@@ -12,4 +12,5 @@ class AuthEvent with _$AuthEvent {
   //   required String token,
   //   required bool persistToken,
   // }) = _LoggedIn;
+  const factory AuthEvent.logout() = _Logout;
 }

@@ -47,13 +47,20 @@ class AuthView extends StatelessWidget {
             ),
             authenticated: (_) => HomePage(),
             unAuthenticated: () => const LoginPage(),
-            error: (msg) => Center(
-              child: ErrorMessageWidgetWithRetry(
-                msg,
-                onRetry: () {
-                  context.read<AuthBloc>().add(const AuthEvent.started());
-                },
-              ),
+            error: (msg) => ErrorMessageWidgetWithRetry(
+              msg,
+              onRetry: () {
+                context.read<AuthBloc>().add(const AuthEvent.started());
+              },
+              actions: [
+                ElevatedButton.icon(
+                  label: const Text('Logout'),
+                  onPressed: () {
+                    context.read<AuthBloc>().add(const AuthEvent.logout());
+                  },
+                  icon: const Icon(Icons.exit_to_app),
+                ),
+              ],
             ),
           ),
           bottomNavigationBar: state.maybeWhen(

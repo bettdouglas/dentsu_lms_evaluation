@@ -68,6 +68,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             },
           );
         },
+        logout: () async {
+          await authRepository.deleteToken();
+          add(const AuthEvent.checkUser());
+        },
       );
     });
   }

@@ -4,7 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lms_app/features/active_page/bloc/active_page_bloc.dart';
 import 'package:lms_app/features/common/widgets/action_button.dart';
 import 'package:lms_app/features/create_lead/create_lead.dart';
+import 'package:lms_app/features/create_quote/view/create_quote_page.dart';
 import 'package:lms_app/features/leads/view/leads_page.dart';
+import 'package:lms_app/features/quotes/quotes.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -63,17 +65,18 @@ class HomePage extends StatelessWidget {
                   NewActionButton(
                     icon: Icons.add,
                     title: 'New Quote',
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => const CreateQuotePage(),
+                        ),
+                      );
+                    },
                   ),
                   SizedBox(width: 28.w),
                   const ActionBarOptions(),
                 ],
-                body: ListView.builder(
-                  itemBuilder: (_, idx) => ListTile(
-                    title: Text('Tile $idx'),
-                  ),
-                  itemCount: 100,
-                ),
+                body: const QuotesPage(),
               );
             } else if (pageIndex == 3) {
               return HomePagePage(

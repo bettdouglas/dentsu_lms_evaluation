@@ -27,6 +27,7 @@ class CreateLeadBloc extends Bloc<CreateLeadEvent, CreateLeadState> {
                   phone: s.phone,
                   customerType: s.customerType,
                   location: s.location,
+                  productRequested: s.product,
                 ),
               ),
             );

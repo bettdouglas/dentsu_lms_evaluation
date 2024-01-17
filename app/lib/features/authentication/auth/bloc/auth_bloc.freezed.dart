@@ -21,6 +21,7 @@ mixin _$AuthEvent {
     required TResult Function() started,
     required TResult Function() checkUser,
     required TResult Function(String token, bool persistToken) login,
+    required TResult Function() logout,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -28,6 +29,7 @@ mixin _$AuthEvent {
     TResult? Function()? started,
     TResult? Function()? checkUser,
     TResult? Function(String token, bool persistToken)? login,
+    TResult? Function()? logout,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -35,6 +37,7 @@ mixin _$AuthEvent {
     TResult Function()? started,
     TResult Function()? checkUser,
     TResult Function(String token, bool persistToken)? login,
+    TResult Function()? logout,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -43,6 +46,7 @@ mixin _$AuthEvent {
     required TResult Function(_Started value) started,
     required TResult Function(_Checkuser value) checkUser,
     required TResult Function(_Login value) login,
+    required TResult Function(_Logout value) logout,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -50,6 +54,7 @@ mixin _$AuthEvent {
     TResult? Function(_Started value)? started,
     TResult? Function(_Checkuser value)? checkUser,
     TResult? Function(_Login value)? login,
+    TResult? Function(_Logout value)? logout,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -57,6 +62,7 @@ mixin _$AuthEvent {
     TResult Function(_Started value)? started,
     TResult Function(_Checkuser value)? checkUser,
     TResult Function(_Login value)? login,
+    TResult Function(_Logout value)? logout,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -120,6 +126,7 @@ class _$StartedImpl implements _Started {
     required TResult Function() started,
     required TResult Function() checkUser,
     required TResult Function(String token, bool persistToken) login,
+    required TResult Function() logout,
   }) {
     return started();
   }
@@ -130,6 +137,7 @@ class _$StartedImpl implements _Started {
     TResult? Function()? started,
     TResult? Function()? checkUser,
     TResult? Function(String token, bool persistToken)? login,
+    TResult? Function()? logout,
   }) {
     return started?.call();
   }
@@ -140,6 +148,7 @@ class _$StartedImpl implements _Started {
     TResult Function()? started,
     TResult Function()? checkUser,
     TResult Function(String token, bool persistToken)? login,
+    TResult Function()? logout,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -154,6 +163,7 @@ class _$StartedImpl implements _Started {
     required TResult Function(_Started value) started,
     required TResult Function(_Checkuser value) checkUser,
     required TResult Function(_Login value) login,
+    required TResult Function(_Logout value) logout,
   }) {
     return started(this);
   }
@@ -164,6 +174,7 @@ class _$StartedImpl implements _Started {
     TResult? Function(_Started value)? started,
     TResult? Function(_Checkuser value)? checkUser,
     TResult? Function(_Login value)? login,
+    TResult? Function(_Logout value)? logout,
   }) {
     return started?.call(this);
   }
@@ -174,6 +185,7 @@ class _$StartedImpl implements _Started {
     TResult Function(_Started value)? started,
     TResult Function(_Checkuser value)? checkUser,
     TResult Function(_Login value)? login,
+    TResult Function(_Logout value)? logout,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -228,6 +240,7 @@ class _$CheckuserImpl implements _Checkuser {
     required TResult Function() started,
     required TResult Function() checkUser,
     required TResult Function(String token, bool persistToken) login,
+    required TResult Function() logout,
   }) {
     return checkUser();
   }
@@ -238,6 +251,7 @@ class _$CheckuserImpl implements _Checkuser {
     TResult? Function()? started,
     TResult? Function()? checkUser,
     TResult? Function(String token, bool persistToken)? login,
+    TResult? Function()? logout,
   }) {
     return checkUser?.call();
   }
@@ -248,6 +262,7 @@ class _$CheckuserImpl implements _Checkuser {
     TResult Function()? started,
     TResult Function()? checkUser,
     TResult Function(String token, bool persistToken)? login,
+    TResult Function()? logout,
     required TResult orElse(),
   }) {
     if (checkUser != null) {
@@ -262,6 +277,7 @@ class _$CheckuserImpl implements _Checkuser {
     required TResult Function(_Started value) started,
     required TResult Function(_Checkuser value) checkUser,
     required TResult Function(_Login value) login,
+    required TResult Function(_Logout value) logout,
   }) {
     return checkUser(this);
   }
@@ -272,6 +288,7 @@ class _$CheckuserImpl implements _Checkuser {
     TResult? Function(_Started value)? started,
     TResult? Function(_Checkuser value)? checkUser,
     TResult? Function(_Login value)? login,
+    TResult? Function(_Logout value)? logout,
   }) {
     return checkUser?.call(this);
   }
@@ -282,6 +299,7 @@ class _$CheckuserImpl implements _Checkuser {
     TResult Function(_Started value)? started,
     TResult Function(_Checkuser value)? checkUser,
     TResult Function(_Login value)? login,
+    TResult Function(_Logout value)? logout,
     required TResult orElse(),
   }) {
     if (checkUser != null) {
@@ -371,6 +389,7 @@ class _$LoginImpl implements _Login {
     required TResult Function() started,
     required TResult Function() checkUser,
     required TResult Function(String token, bool persistToken) login,
+    required TResult Function() logout,
   }) {
     return login(token, persistToken);
   }
@@ -381,6 +400,7 @@ class _$LoginImpl implements _Login {
     TResult? Function()? started,
     TResult? Function()? checkUser,
     TResult? Function(String token, bool persistToken)? login,
+    TResult? Function()? logout,
   }) {
     return login?.call(token, persistToken);
   }
@@ -391,6 +411,7 @@ class _$LoginImpl implements _Login {
     TResult Function()? started,
     TResult Function()? checkUser,
     TResult Function(String token, bool persistToken)? login,
+    TResult Function()? logout,
     required TResult orElse(),
   }) {
     if (login != null) {
@@ -405,6 +426,7 @@ class _$LoginImpl implements _Login {
     required TResult Function(_Started value) started,
     required TResult Function(_Checkuser value) checkUser,
     required TResult Function(_Login value) login,
+    required TResult Function(_Logout value) logout,
   }) {
     return login(this);
   }
@@ -415,6 +437,7 @@ class _$LoginImpl implements _Login {
     TResult? Function(_Started value)? started,
     TResult? Function(_Checkuser value)? checkUser,
     TResult? Function(_Login value)? login,
+    TResult? Function(_Logout value)? logout,
   }) {
     return login?.call(this);
   }
@@ -425,6 +448,7 @@ class _$LoginImpl implements _Login {
     TResult Function(_Started value)? started,
     TResult Function(_Checkuser value)? checkUser,
     TResult Function(_Login value)? login,
+    TResult Function(_Logout value)? logout,
     required TResult orElse(),
   }) {
     if (login != null) {
@@ -444,6 +468,120 @@ abstract class _Login implements AuthEvent {
   @JsonKey(ignore: true)
   _$$LoginImplCopyWith<_$LoginImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$LogoutImplCopyWith<$Res> {
+  factory _$$LogoutImplCopyWith(
+          _$LogoutImpl value, $Res Function(_$LogoutImpl) then) =
+      __$$LogoutImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$LogoutImplCopyWithImpl<$Res>
+    extends _$AuthEventCopyWithImpl<$Res, _$LogoutImpl>
+    implements _$$LogoutImplCopyWith<$Res> {
+  __$$LogoutImplCopyWithImpl(
+      _$LogoutImpl _value, $Res Function(_$LogoutImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$LogoutImpl implements _Logout {
+  const _$LogoutImpl();
+
+  @override
+  String toString() {
+    return 'AuthEvent.logout()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$LogoutImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function() checkUser,
+    required TResult Function(String token, bool persistToken) login,
+    required TResult Function() logout,
+  }) {
+    return logout();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function()? checkUser,
+    TResult? Function(String token, bool persistToken)? login,
+    TResult? Function()? logout,
+  }) {
+    return logout?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function()? checkUser,
+    TResult Function(String token, bool persistToken)? login,
+    TResult Function()? logout,
+    required TResult orElse(),
+  }) {
+    if (logout != null) {
+      return logout();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_Checkuser value) checkUser,
+    required TResult Function(_Login value) login,
+    required TResult Function(_Logout value) logout,
+  }) {
+    return logout(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(_Checkuser value)? checkUser,
+    TResult? Function(_Login value)? login,
+    TResult? Function(_Logout value)? logout,
+  }) {
+    return logout?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_Checkuser value)? checkUser,
+    TResult Function(_Login value)? login,
+    TResult Function(_Logout value)? logout,
+    required TResult orElse(),
+  }) {
+    if (logout != null) {
+      return logout(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Logout implements AuthEvent {
+  const factory _Logout() = _$LogoutImpl;
 }
 
 /// @nodoc

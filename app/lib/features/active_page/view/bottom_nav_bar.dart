@@ -39,6 +39,7 @@ class BottomNavBarWidget extends StatelessWidget {
                     'assets/svg/${e.value}',
                     width: 26.w,
                     height: 26.h,
+                    // ignore: deprecated_member_use
                     color: currentIndex == e.key ? LmsColors.pink : Colors.grey,
                   ),
                   label: '',

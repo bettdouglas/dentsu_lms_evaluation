@@ -13,8 +13,10 @@ import 'package:lms_app/features/common/grpc-gen/agent_service.pbgrpc.dart';
 import 'package:lms_app/features/common/grpc-gen/interceptors.dart';
 import 'package:lms_app/features/common/grpc-gen/lead_service.pbgrpc.dart';
 import 'package:lms_app/features/common/grpc-gen/quote_benefit_service.pbgrpc.dart';
+import 'package:lms_app/features/common/grpc-gen/quote_service.pbgrpc.dart';
 import 'package:lms_app/features/common/grpc-gen/quote_setup_service.pbgrpc.dart';
 import 'package:lms_app/features/create_lead/bloc/create_lead_bloc.dart';
+import 'package:lms_app/features/create_quote/bloc/create_quote_bloc.dart';
 import 'package:lms_app/features/lead/bloc/lead_bloc.dart';
 import 'package:lms_app/features/leads/bloc/leads_bloc.dart';
 import 'package:lms_app/features/quote/bloc/quote_bloc.dart';
@@ -64,6 +66,12 @@ class App extends StatelessWidget {
             ),
           ),
           RepositoryProvider(
+            create: (_) => QuoteServiceClient(
+              channel,
+              interceptors: interceptors,
+            ),
+          ),
+          RepositoryProvider(
             create: (_) => QuoteBenefitServiceClient(
               channel,
               interceptors: interceptors,
@@ -100,14 +108,25 @@ class App extends StatelessWidget {
               )..add(const LeadsEvent.started()),
             ),
             BlocProvider(
-              create: (context) => LeadBloc(),
+              create: (context) => LeadBloc(
+                leadServiceClient: context.read<LeadServiceClient>(),
+              ),
             ),
             BlocProvider(
-              create: (context) => QuoteBloc(),
+              create: (context) => QuoteBloc(
+                quoteServiceClient: context.read<QuoteServiceClient>(),
+              ),
             ),
             BlocProvider(
-              create: (context) => QuotesBloc(),
+              create: (context) => QuotesBloc(
+                quoteServiceClient: context.read<QuoteServiceClient>(),
+              )..add(const QuotesEvent.started()),
             ),
+            BlocProvider(
+              create: (context) => CreateQuoteBloc(
+                quoteServiceClient: context.read<QuoteServiceClient>(),
+              ),
+            )
           ],
           child: MaterialApp(
             theme: FlexThemeData.light(

@@ -9,5 +9,6 @@ class CreateLeadEvent with _$CreateLeadEvent {
     required String location,
     required String phone,
     required String customerType,
+    required String product,
   }) = _SaveNewLead;
 }

@@ -200,6 +200,38 @@ class _CreateLeadViewState extends State<CreateLeadView> {
                         ),
                       ]),
                     ),
+                    SizedBox(height: 26.h),
+                    Text(
+                      'Product',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14.sp,
+                      ),
+                    ),
+                    SizedBox(height: 10.h),
+                    FormBuilderDropdown<String>(
+                      name: 'product',
+                      items: knownProducts
+                          .map(
+                            (e) => DropdownMenuItem<String>(
+                              value: e,
+                              child: Text(e),
+                            ),
+                          )
+                          .toList(),
+                      style: TextStyle(
+                        fontSize: 13.sp,
+                        color: Colors.black.withOpacity(0.6),
+                      ),
+                      decoration: const InputDecoration(
+                        hintText: 'Type of Product',
+                      ),
+                      validator: FormBuilderValidators.compose([
+                        FormBuilderValidators.required(
+                          errorText: 'Product being sold is required',
+                        ),
+                      ]),
+                    ),
                     SizedBox(height: 52.h),
                     Align(
                       alignment: Alignment.centerRight,
@@ -219,6 +251,7 @@ class _CreateLeadViewState extends State<CreateLeadView> {
                             final phone = fields['phone']!.value as String;
                             final customerType =
                                 fields['customer_type']!.value as String;
+                            final product = fields['product']!.value as String;
                             context
                                 .read<CreateLeadBloc>()
                                 .add(CreateLeadEvent.saveNewLead(
@@ -227,6 +260,7 @@ class _CreateLeadViewState extends State<CreateLeadView> {
                                   location: location,
                                   phone: phone,
                                   customerType: customerType,
+                                  product: product,
                                 ));
                           }
                         },
@@ -248,4 +282,16 @@ final knownCustomerTypes = [
   'Company',
   'Small Business',
   'Family',
+];
+
+final knownProducts = [
+  'Critical Illness Cover',
+  'Balanced Fund',
+  'Imarika Investment',
+  'Pension Annuity',
+  'Hospicash',
+  'Tegemeo Term',
+  'Akiba',
+  'Golf Insurance',
+  'Income Drawdown',
 ];
