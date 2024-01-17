@@ -57,6 +57,7 @@ extension AsGrpcQuote on QuoteWithAllData {
 extension AsGrpcQuoteBenefit on db.QuoteBenefit {
   QuoteBenefit asGrpcQuoteBenefit() {
     return QuoteBenefit(
+      id: id,
       covid19Cover: covid19Cover,
       dental: dental,
       inPatient: inPatient,
@@ -73,10 +74,11 @@ extension AsGrpcQuoteBenefit on db.QuoteBenefit {
 extension AsGrpcQuoteSetup on db.QuoteSetup {
   QuoteSetup asGrpcQuoteSetup() {
     return QuoteSetup(
+      id: id,
       ageBracket: ageBracket,
       coverChildren: coverChildren,
       inPatientCoverLimit: inPatientCoverLimit,
-      numberOfChildren: numberOfChildren,
+      numberOfChildrenCovered: numberOfChildrenCovered,
       spouseAgeBracket: spouseAgeBracket,
       spouseCovered: spouseCovered,
     );

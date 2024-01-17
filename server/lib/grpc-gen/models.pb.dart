@@ -330,9 +330,10 @@ class QuoteSetup extends $pb.GeneratedMessage {
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ageBracket', protoName: 'ageBracket')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'inPatientCoverLimit', protoName: 'inPatientCoverLimit')
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'spouseCovered', protoName: 'spouseCovered')
-    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'numberOfChildren', protoName: 'numberOfChildren')
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'numberOfChildrenCovered', protoName: 'numberOfChildrenCovered')
     ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'coverChildren', protoName: 'coverChildren')
     ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'spouseAgeBracket', protoName: 'spouseAgeBracket')
+    ..a<$core.int>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
@@ -341,9 +342,10 @@ class QuoteSetup extends $pb.GeneratedMessage {
     $core.String? ageBracket,
     $core.String? inPatientCoverLimit,
     $core.String? spouseCovered,
-    $core.String? numberOfChildren,
+    $core.String? numberOfChildrenCovered,
     $core.String? coverChildren,
     $core.String? spouseAgeBracket,
+    $core.int? id,
   }) {
     final _result = create();
     if (ageBracket != null) {
@@ -355,14 +357,17 @@ class QuoteSetup extends $pb.GeneratedMessage {
     if (spouseCovered != null) {
       _result.spouseCovered = spouseCovered;
     }
-    if (numberOfChildren != null) {
-      _result.numberOfChildren = numberOfChildren;
+    if (numberOfChildrenCovered != null) {
+      _result.numberOfChildrenCovered = numberOfChildrenCovered;
     }
     if (coverChildren != null) {
       _result.coverChildren = coverChildren;
     }
     if (spouseAgeBracket != null) {
       _result.spouseAgeBracket = spouseAgeBracket;
+    }
+    if (id != null) {
+      _result.id = id;
     }
     return _result;
   }
@@ -415,13 +420,13 @@ class QuoteSetup extends $pb.GeneratedMessage {
   void clearSpouseCovered() => clearField(3);
 
   @$pb.TagNumber(4)
-  $core.String get numberOfChildren => $_getSZ(3);
+  $core.String get numberOfChildrenCovered => $_getSZ(3);
   @$pb.TagNumber(4)
-  set numberOfChildren($core.String v) { $_setString(3, v); }
+  set numberOfChildrenCovered($core.String v) { $_setString(3, v); }
   @$pb.TagNumber(4)
-  $core.bool hasNumberOfChildren() => $_has(3);
+  $core.bool hasNumberOfChildrenCovered() => $_has(3);
   @$pb.TagNumber(4)
-  void clearNumberOfChildren() => clearField(4);
+  void clearNumberOfChildrenCovered() => clearField(4);
 
   @$pb.TagNumber(5)
   $core.String get coverChildren => $_getSZ(4);
@@ -440,6 +445,15 @@ class QuoteSetup extends $pb.GeneratedMessage {
   $core.bool hasSpouseAgeBracket() => $_has(5);
   @$pb.TagNumber(6)
   void clearSpouseAgeBracket() => clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.int get id => $_getIZ(6);
+  @$pb.TagNumber(7)
+  set id($core.int v) { $_setSignedInt32(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasId() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearId() => clearField(7);
 }
 
 class QuoteBenefit extends $pb.GeneratedMessage {
@@ -453,6 +467,7 @@ class QuoteBenefit extends $pb.GeneratedMessage {
     ..aOB(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'lastExpense', protoName: 'lastExpense')
     ..aOB(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'personalAccident', protoName: 'personalAccident')
     ..aOB(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'covid19Cover', protoName: 'covid19Cover')
+    ..a<$core.int>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
@@ -467,6 +482,7 @@ class QuoteBenefit extends $pb.GeneratedMessage {
     $core.bool? lastExpense,
     $core.bool? personalAccident,
     $core.bool? covid19Cover,
+    $core.int? id,
   }) {
     final _result = create();
     if (inPatient != null) {
@@ -495,6 +511,9 @@ class QuoteBenefit extends $pb.GeneratedMessage {
     }
     if (covid19Cover != null) {
       _result.covid19Cover = covid19Cover;
+    }
+    if (id != null) {
+      _result.id = id;
     }
     return _result;
   }
@@ -599,6 +618,15 @@ class QuoteBenefit extends $pb.GeneratedMessage {
   $core.bool hasCovid19Cover() => $_has(8);
   @$pb.TagNumber(9)
   void clearCovid19Cover() => clearField(9);
+
+  @$pb.TagNumber(10)
+  $core.int get id => $_getIZ(9);
+  @$pb.TagNumber(10)
+  set id($core.int v) { $_setSignedInt32(9, v); }
+  @$pb.TagNumber(10)
+  $core.bool hasId() => $_has(9);
+  @$pb.TagNumber(10)
+  void clearId() => clearField(10);
 }
 
 class Quote extends $pb.GeneratedMessage {

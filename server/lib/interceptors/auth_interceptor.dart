@@ -16,7 +16,7 @@ Future<GrpcError?> authInterceptor(
     return null;
   }
   print('Metatada: $metadata');
-  final token = metadata['authentication'];
+  final token = metadata['authorization'];
   if (token == null) {
     return GrpcError.unauthenticated('Token not found');
   }

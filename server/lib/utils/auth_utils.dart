@@ -80,7 +80,7 @@ class InvalidTokenException implements Exception {
 Future<Either<String, int>> getUidFromMetadata(ServiceCall serviceCall) async {
   final metadata = serviceCall.clientMetadata ?? {};
   print(metadata);
-  final token = metadata['authentication'];
+  final token = metadata['authorization'];
   if (token == null) {
     return left('Missing token header');
   }

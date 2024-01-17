@@ -31,9 +31,10 @@ message QuoteSetup {
     string ageBracket = 1;
     string inPatientCoverLimit = 2;
     string spouseCovered = 3;
-    string  numberOfChildren = 4;
+    string  numberOfChildrenCovered = 4;
     string coverChildren = 5;
     string spouseAgeBracket = 6;
+    int32 id = 7;
 }
 
 message QuoteBenefit {
@@ -46,6 +47,7 @@ message QuoteBenefit {
     bool lastExpense = 7;
     bool personalAccident = 8;
     bool covid19Cover = 9;
+    int32 id = 10;
 }
 
 message Quote {

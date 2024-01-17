@@ -9,7 +9,7 @@ LazyDatabase openNativeDatabase(String databaseName) {
     // put the database file, called db.sqlite here, into the documents folder
     // for your app.
     final file = File(databaseName);
-    return NativeDatabase.createInBackground(file);
+    return NativeDatabase.createInBackground(file, logStatements: true);
   });
 }
 

@@ -27,7 +27,6 @@ void main() {
       location: 'location',
       agentId: agent1.id,
       phone: 'phone',
-      accountNumber: 'accountNumber',
       customerType: 'customerType',
     );
     agent1Lead2 = await lmsDb.addLead(
@@ -36,7 +35,6 @@ void main() {
       location: 'location',
       agentId: agent1.id,
       phone: 'phone',
-      accountNumber: 'accountNumber',
       customerType: 'customerType',
     );
     agent2Lead1 = await lmsDb.addLead(
@@ -45,7 +43,6 @@ void main() {
       location: 'location',
       agentId: agent2.id,
       phone: 'phone',
-      accountNumber: 'accountNumber',
       customerType: 'customerType',
     );
     agent2Lead2 = await lmsDb.addLead(
@@ -54,7 +51,6 @@ void main() {
       location: 'location',
       agentId: agent2.id,
       phone: 'phone',
-      accountNumber: 'accountNumber',
       customerType: 'customerType',
     );
     agent2Lead3 = await lmsDb.addLead(
@@ -63,7 +59,6 @@ void main() {
       location: 'location',
       agentId: agent2.id,
       phone: 'phone',
-      accountNumber: 'accountNumber',
       customerType: 'customerType',
     );
   });

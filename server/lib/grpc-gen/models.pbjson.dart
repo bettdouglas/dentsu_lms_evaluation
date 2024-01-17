@@ -50,14 +50,15 @@ const QuoteSetup$json = const {
     const {'1': 'ageBracket', '3': 1, '4': 1, '5': 9, '10': 'ageBracket'},
     const {'1': 'inPatientCoverLimit', '3': 2, '4': 1, '5': 9, '10': 'inPatientCoverLimit'},
     const {'1': 'spouseCovered', '3': 3, '4': 1, '5': 9, '10': 'spouseCovered'},
-    const {'1': 'numberOfChildren', '3': 4, '4': 1, '5': 9, '10': 'numberOfChildren'},
+    const {'1': 'numberOfChildrenCovered', '3': 4, '4': 1, '5': 9, '10': 'numberOfChildrenCovered'},
     const {'1': 'coverChildren', '3': 5, '4': 1, '5': 9, '10': 'coverChildren'},
     const {'1': 'spouseAgeBracket', '3': 6, '4': 1, '5': 9, '10': 'spouseAgeBracket'},
+    const {'1': 'id', '3': 7, '4': 1, '5': 5, '10': 'id'},
   ],
 };
 
 /// Descriptor for `QuoteSetup`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List quoteSetupDescriptor = $convert.base64Decode('CgpRdW90ZVNldHVwEh4KCmFnZUJyYWNrZXQYASABKAlSCmFnZUJyYWNrZXQSMAoTaW5QYXRpZW50Q292ZXJMaW1pdBgCIAEoCVITaW5QYXRpZW50Q292ZXJMaW1pdBIkCg1zcG91c2VDb3ZlcmVkGAMgASgJUg1zcG91c2VDb3ZlcmVkEioKEG51bWJlck9mQ2hpbGRyZW4YBCABKAlSEG51bWJlck9mQ2hpbGRyZW4SJAoNY292ZXJDaGlsZHJlbhgFIAEoCVINY292ZXJDaGlsZHJlbhIqChBzcG91c2VBZ2VCcmFja2V0GAYgASgJUhBzcG91c2VBZ2VCcmFja2V0');
+final $typed_data.Uint8List quoteSetupDescriptor = $convert.base64Decode('CgpRdW90ZVNldHVwEh4KCmFnZUJyYWNrZXQYASABKAlSCmFnZUJyYWNrZXQSMAoTaW5QYXRpZW50Q292ZXJMaW1pdBgCIAEoCVITaW5QYXRpZW50Q292ZXJMaW1pdBIkCg1zcG91c2VDb3ZlcmVkGAMgASgJUg1zcG91c2VDb3ZlcmVkEjgKF251bWJlck9mQ2hpbGRyZW5Db3ZlcmVkGAQgASgJUhdudW1iZXJPZkNoaWxkcmVuQ292ZXJlZBIkCg1jb3ZlckNoaWxkcmVuGAUgASgJUg1jb3ZlckNoaWxkcmVuEioKEHNwb3VzZUFnZUJyYWNrZXQYBiABKAlSEHNwb3VzZUFnZUJyYWNrZXQSDgoCaWQYByABKAVSAmlk');
 @$core.Deprecated('Use quoteBenefitDescriptor instead')
 const QuoteBenefit$json = const {
   '1': 'QuoteBenefit',
@@ -71,11 +72,12 @@ const QuoteBenefit$json = const {
     const {'1': 'lastExpense', '3': 7, '4': 1, '5': 8, '10': 'lastExpense'},
     const {'1': 'personalAccident', '3': 8, '4': 1, '5': 8, '10': 'personalAccident'},
     const {'1': 'covid19Cover', '3': 9, '4': 1, '5': 8, '10': 'covid19Cover'},
+    const {'1': 'id', '3': 10, '4': 1, '5': 5, '10': 'id'},
   ],
 };
 
 /// Descriptor for `QuoteBenefit`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List quoteBenefitDescriptor = $convert.base64Decode('CgxRdW90ZUJlbmVmaXQSHAoJaW5QYXRpZW50GAEgASgIUglpblBhdGllbnQSHgoKb3V0UGF0aWVudBgCIAEoCFIKb3V0UGF0aWVudBIgCgtub0NvUGF5bWVudBgDIAEoCFILbm9Db1BheW1lbnQSFgoGZGVudGFsGAQgASgIUgZkZW50YWwSGAoHb3B0aWNhbBgFIAEoCFIHb3B0aWNhbBIcCgltYXRlcm5pdHkYBiABKAhSCW1hdGVybml0eRIgCgtsYXN0RXhwZW5zZRgHIAEoCFILbGFzdEV4cGVuc2USKgoQcGVyc29uYWxBY2NpZGVudBgIIAEoCFIQcGVyc29uYWxBY2NpZGVudBIiCgxjb3ZpZDE5Q292ZXIYCSABKAhSDGNvdmlkMTlDb3Zlcg==');
+final $typed_data.Uint8List quoteBenefitDescriptor = $convert.base64Decode('CgxRdW90ZUJlbmVmaXQSHAoJaW5QYXRpZW50GAEgASgIUglpblBhdGllbnQSHgoKb3V0UGF0aWVudBgCIAEoCFIKb3V0UGF0aWVudBIgCgtub0NvUGF5bWVudBgDIAEoCFILbm9Db1BheW1lbnQSFgoGZGVudGFsGAQgASgIUgZkZW50YWwSGAoHb3B0aWNhbBgFIAEoCFIHb3B0aWNhbBIcCgltYXRlcm5pdHkYBiABKAhSCW1hdGVybml0eRIgCgtsYXN0RXhwZW5zZRgHIAEoCFILbGFzdEV4cGVuc2USKgoQcGVyc29uYWxBY2NpZGVudBgIIAEoCFIQcGVyc29uYWxBY2NpZGVudBIiCgxjb3ZpZDE5Q292ZXIYCSABKAhSDGNvdmlkMTlDb3ZlchIOCgJpZBgKIAEoBVICaWQ=');
 @$core.Deprecated('Use quoteDescriptor instead')
 const Quote$json = const {
   '1': 'Quote',

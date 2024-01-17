@@ -35,7 +35,8 @@ class Leads extends GenericTable {
   TextColumn get location => text()();
   TextColumn get status => text()();
   TextColumn get phone => text()();
-  TextColumn get accountNumber => text()();
+  TextColumn get accountNumber =>
+      text().withDefault(Constant(Slugid.v4().uuid()))();
   TextColumn get customerType => text()();
   DateTimeColumn get appointmentDate => dateTime().nullable()();
   IntColumn get sourceAgentId => integer().references(Agents, #id)();
@@ -52,8 +53,7 @@ class QuoteSetups extends GenericTable {
   TextColumn get ageBracket => text().nullable()();
   TextColumn get inPatientCoverLimit => text().nullable()();
   TextColumn get spouseCovered => text().nullable()();
-  TextColumn get numberOfChildren => text().nullable()();
-  TextColumn get childrenCovered => text().nullable()();
+  TextColumn get numberOfChildrenCovered => text().nullable()();
   TextColumn get coverChildren => text().nullable()();
   TextColumn get spouseAgeBracket => text().nullable()();
 }
@@ -148,7 +148,6 @@ class LmsDb extends _$LmsDb {
     required String location,
     required int agentId,
     required String phone,
-    required String accountNumber,
     required String customerType,
   }) async {
     final result = await into(leads).insert(
@@ -157,7 +156,6 @@ class LmsDb extends _$LmsDb {
         email: email,
         location: location,
         sourceAgentId: agentId,
-        accountNumber: accountNumber,
         customerType: customerType,
         phone: phone,
         status: 'New',
@@ -262,5 +260,21 @@ class LmsDb extends _$LmsDb {
 
   Future<void> deleteQuote(int id) {
     return (delete(quotes)..where((tbl) => tbl.id.equals(id))).go();
+  }
+
+  SingleOrNullSelectable<QuoteSetup> getQuoteSetup(int quoteSetupId) {
+    return select(quoteSetups)..where((tbl) => tbl.id.equals(quoteSetupId));
+  }
+
+  Future<void> updateQuoteSetup(Insertable<QuoteSetup> quoteSetup) {
+    return update(quoteSetups).replace(quoteSetup);
+  }
+
+  SingleOrNullSelectable<QuoteBenefit> getQuoteBenefit(int quoteBenefitId) {
+    return select(quoteBenefits)..where((tbl) => tbl.id.equals(quoteBenefitId));
+  }
+
+  Future<void> updateQuoteBenefit(Insertable<QuoteBenefit> quoteBenefit) {
+    return update(quoteBenefits).replace(quoteBenefit);
   }
 }

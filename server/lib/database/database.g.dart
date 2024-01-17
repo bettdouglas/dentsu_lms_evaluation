@@ -421,7 +421,9 @@ class $LeadsTable extends Leads with TableInfo<$LeadsTable, Lead> {
   @override
   late final GeneratedColumn<String> accountNumber = GeneratedColumn<String>(
       'account_number', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: Constant(Slugid.v4().uuid()));
   static const VerificationMeta _customerTypeMeta =
       const VerificationMeta('customerType');
   @override
@@ -514,8 +516,6 @@ class $LeadsTable extends Leads with TableInfo<$LeadsTable, Lead> {
           _accountNumberMeta,
           accountNumber.isAcceptableOrUnknown(
               data['account_number']!, _accountNumberMeta));
-    } else if (isInserting) {
-      context.missing(_accountNumberMeta);
     }
     if (data.containsKey('customer_type')) {
       context.handle(
@@ -804,7 +804,7 @@ class LeadsCompanion extends UpdateCompanion<Lead> {
     required String location,
     required String status,
     required String phone,
-    required String accountNumber,
+    this.accountNumber = const Value.absent(),
     required String customerType,
     this.appointmentDate = const Value.absent(),
     required int sourceAgentId,
@@ -813,7 +813,6 @@ class LeadsCompanion extends UpdateCompanion<Lead> {
         location = Value(location),
         status = Value(status),
         phone = Value(phone),
-        accountNumber = Value(accountNumber),
         customerType = Value(customerType),
         sourceAgentId = Value(sourceAgentId);
   static Insertable<Lead> custom({
@@ -1322,18 +1321,12 @@ class $QuoteSetupsTable extends QuoteSetups
   late final GeneratedColumn<String> spouseCovered = GeneratedColumn<String>(
       'spouse_covered', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _numberOfChildrenMeta =
-      const VerificationMeta('numberOfChildren');
+  static const VerificationMeta _numberOfChildrenCoveredMeta =
+      const VerificationMeta('numberOfChildrenCovered');
   @override
-  late final GeneratedColumn<String> numberOfChildren = GeneratedColumn<String>(
-      'number_of_children', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _childrenCoveredMeta =
-      const VerificationMeta('childrenCovered');
-  @override
-  late final GeneratedColumn<String> childrenCovered = GeneratedColumn<String>(
-      'children_covered', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
+  late final GeneratedColumn<String> numberOfChildrenCovered =
+      GeneratedColumn<String>('number_of_children_covered', aliasedName, true,
+          type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _coverChildrenMeta =
       const VerificationMeta('coverChildren');
   @override
@@ -1355,8 +1348,7 @@ class $QuoteSetupsTable extends QuoteSetups
         ageBracket,
         inPatientCoverLimit,
         spouseCovered,
-        numberOfChildren,
-        childrenCovered,
+        numberOfChildrenCovered,
         coverChildren,
         spouseAgeBracket
       ];
@@ -1405,17 +1397,12 @@ class $QuoteSetupsTable extends QuoteSetups
           spouseCovered.isAcceptableOrUnknown(
               data['spouse_covered']!, _spouseCoveredMeta));
     }
-    if (data.containsKey('number_of_children')) {
+    if (data.containsKey('number_of_children_covered')) {
       context.handle(
-          _numberOfChildrenMeta,
-          numberOfChildren.isAcceptableOrUnknown(
-              data['number_of_children']!, _numberOfChildrenMeta));
-    }
-    if (data.containsKey('children_covered')) {
-      context.handle(
-          _childrenCoveredMeta,
-          childrenCovered.isAcceptableOrUnknown(
-              data['children_covered']!, _childrenCoveredMeta));
+          _numberOfChildrenCoveredMeta,
+          numberOfChildrenCovered.isAcceptableOrUnknown(
+              data['number_of_children_covered']!,
+              _numberOfChildrenCoveredMeta));
     }
     if (data.containsKey('cover_children')) {
       context.handle(
@@ -1453,10 +1440,9 @@ class $QuoteSetupsTable extends QuoteSetups
           data['${effectivePrefix}in_patient_cover_limit']),
       spouseCovered: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}spouse_covered']),
-      numberOfChildren: attachedDatabase.typeMapping.read(
-          DriftSqlType.string, data['${effectivePrefix}number_of_children']),
-      childrenCovered: attachedDatabase.typeMapping.read(
-          DriftSqlType.string, data['${effectivePrefix}children_covered']),
+      numberOfChildrenCovered: attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}number_of_children_covered']),
       coverChildren: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}cover_children']),
       spouseAgeBracket: attachedDatabase.typeMapping.read(
@@ -1479,8 +1465,7 @@ class QuoteSetup extends DataClass implements Insertable<QuoteSetup> {
   final String? ageBracket;
   final String? inPatientCoverLimit;
   final String? spouseCovered;
-  final String? numberOfChildren;
-  final String? childrenCovered;
+  final String? numberOfChildrenCovered;
   final String? coverChildren;
   final String? spouseAgeBracket;
   const QuoteSetup(
@@ -1491,8 +1476,7 @@ class QuoteSetup extends DataClass implements Insertable<QuoteSetup> {
       this.ageBracket,
       this.inPatientCoverLimit,
       this.spouseCovered,
-      this.numberOfChildren,
-      this.childrenCovered,
+      this.numberOfChildrenCovered,
       this.coverChildren,
       this.spouseAgeBracket});
   @override
@@ -1513,11 +1497,9 @@ class QuoteSetup extends DataClass implements Insertable<QuoteSetup> {
     if (!nullToAbsent || spouseCovered != null) {
       map['spouse_covered'] = Variable<String>(spouseCovered);
     }
-    if (!nullToAbsent || numberOfChildren != null) {
-      map['number_of_children'] = Variable<String>(numberOfChildren);
-    }
-    if (!nullToAbsent || childrenCovered != null) {
-      map['children_covered'] = Variable<String>(childrenCovered);
+    if (!nullToAbsent || numberOfChildrenCovered != null) {
+      map['number_of_children_covered'] =
+          Variable<String>(numberOfChildrenCovered);
     }
     if (!nullToAbsent || coverChildren != null) {
       map['cover_children'] = Variable<String>(coverChildren);
@@ -1545,12 +1527,9 @@ class QuoteSetup extends DataClass implements Insertable<QuoteSetup> {
       spouseCovered: spouseCovered == null && nullToAbsent
           ? const Value.absent()
           : Value(spouseCovered),
-      numberOfChildren: numberOfChildren == null && nullToAbsent
+      numberOfChildrenCovered: numberOfChildrenCovered == null && nullToAbsent
           ? const Value.absent()
-          : Value(numberOfChildren),
-      childrenCovered: childrenCovered == null && nullToAbsent
-          ? const Value.absent()
-          : Value(childrenCovered),
+          : Value(numberOfChildrenCovered),
       coverChildren: coverChildren == null && nullToAbsent
           ? const Value.absent()
           : Value(coverChildren),
@@ -1572,8 +1551,8 @@ class QuoteSetup extends DataClass implements Insertable<QuoteSetup> {
       inPatientCoverLimit:
           serializer.fromJson<String?>(json['inPatientCoverLimit']),
       spouseCovered: serializer.fromJson<String?>(json['spouseCovered']),
-      numberOfChildren: serializer.fromJson<String?>(json['numberOfChildren']),
-      childrenCovered: serializer.fromJson<String?>(json['childrenCovered']),
+      numberOfChildrenCovered:
+          serializer.fromJson<String?>(json['numberOfChildrenCovered']),
       coverChildren: serializer.fromJson<String?>(json['coverChildren']),
       spouseAgeBracket: serializer.fromJson<String?>(json['spouseAgeBracket']),
     );
@@ -1589,8 +1568,8 @@ class QuoteSetup extends DataClass implements Insertable<QuoteSetup> {
       'ageBracket': serializer.toJson<String?>(ageBracket),
       'inPatientCoverLimit': serializer.toJson<String?>(inPatientCoverLimit),
       'spouseCovered': serializer.toJson<String?>(spouseCovered),
-      'numberOfChildren': serializer.toJson<String?>(numberOfChildren),
-      'childrenCovered': serializer.toJson<String?>(childrenCovered),
+      'numberOfChildrenCovered':
+          serializer.toJson<String?>(numberOfChildrenCovered),
       'coverChildren': serializer.toJson<String?>(coverChildren),
       'spouseAgeBracket': serializer.toJson<String?>(spouseAgeBracket),
     };
@@ -1604,8 +1583,7 @@ class QuoteSetup extends DataClass implements Insertable<QuoteSetup> {
           Value<String?> ageBracket = const Value.absent(),
           Value<String?> inPatientCoverLimit = const Value.absent(),
           Value<String?> spouseCovered = const Value.absent(),
-          Value<String?> numberOfChildren = const Value.absent(),
-          Value<String?> childrenCovered = const Value.absent(),
+          Value<String?> numberOfChildrenCovered = const Value.absent(),
           Value<String?> coverChildren = const Value.absent(),
           Value<String?> spouseAgeBracket = const Value.absent()}) =>
       QuoteSetup(
@@ -1619,12 +1597,9 @@ class QuoteSetup extends DataClass implements Insertable<QuoteSetup> {
             : this.inPatientCoverLimit,
         spouseCovered:
             spouseCovered.present ? spouseCovered.value : this.spouseCovered,
-        numberOfChildren: numberOfChildren.present
-            ? numberOfChildren.value
-            : this.numberOfChildren,
-        childrenCovered: childrenCovered.present
-            ? childrenCovered.value
-            : this.childrenCovered,
+        numberOfChildrenCovered: numberOfChildrenCovered.present
+            ? numberOfChildrenCovered.value
+            : this.numberOfChildrenCovered,
         coverChildren:
             coverChildren.present ? coverChildren.value : this.coverChildren,
         spouseAgeBracket: spouseAgeBracket.present
@@ -1641,8 +1616,7 @@ class QuoteSetup extends DataClass implements Insertable<QuoteSetup> {
           ..write('ageBracket: $ageBracket, ')
           ..write('inPatientCoverLimit: $inPatientCoverLimit, ')
           ..write('spouseCovered: $spouseCovered, ')
-          ..write('numberOfChildren: $numberOfChildren, ')
-          ..write('childrenCovered: $childrenCovered, ')
+          ..write('numberOfChildrenCovered: $numberOfChildrenCovered, ')
           ..write('coverChildren: $coverChildren, ')
           ..write('spouseAgeBracket: $spouseAgeBracket')
           ..write(')'))
@@ -1658,8 +1632,7 @@ class QuoteSetup extends DataClass implements Insertable<QuoteSetup> {
       ageBracket,
       inPatientCoverLimit,
       spouseCovered,
-      numberOfChildren,
-      childrenCovered,
+      numberOfChildrenCovered,
       coverChildren,
       spouseAgeBracket);
   @override
@@ -1673,8 +1646,7 @@ class QuoteSetup extends DataClass implements Insertable<QuoteSetup> {
           other.ageBracket == this.ageBracket &&
           other.inPatientCoverLimit == this.inPatientCoverLimit &&
           other.spouseCovered == this.spouseCovered &&
-          other.numberOfChildren == this.numberOfChildren &&
-          other.childrenCovered == this.childrenCovered &&
+          other.numberOfChildrenCovered == this.numberOfChildrenCovered &&
           other.coverChildren == this.coverChildren &&
           other.spouseAgeBracket == this.spouseAgeBracket);
 }
@@ -1687,8 +1659,7 @@ class QuoteSetupsCompanion extends UpdateCompanion<QuoteSetup> {
   final Value<String?> ageBracket;
   final Value<String?> inPatientCoverLimit;
   final Value<String?> spouseCovered;
-  final Value<String?> numberOfChildren;
-  final Value<String?> childrenCovered;
+  final Value<String?> numberOfChildrenCovered;
   final Value<String?> coverChildren;
   final Value<String?> spouseAgeBracket;
   const QuoteSetupsCompanion({
@@ -1699,8 +1670,7 @@ class QuoteSetupsCompanion extends UpdateCompanion<QuoteSetup> {
     this.ageBracket = const Value.absent(),
     this.inPatientCoverLimit = const Value.absent(),
     this.spouseCovered = const Value.absent(),
-    this.numberOfChildren = const Value.absent(),
-    this.childrenCovered = const Value.absent(),
+    this.numberOfChildrenCovered = const Value.absent(),
     this.coverChildren = const Value.absent(),
     this.spouseAgeBracket = const Value.absent(),
   });
@@ -1712,8 +1682,7 @@ class QuoteSetupsCompanion extends UpdateCompanion<QuoteSetup> {
     this.ageBracket = const Value.absent(),
     this.inPatientCoverLimit = const Value.absent(),
     this.spouseCovered = const Value.absent(),
-    this.numberOfChildren = const Value.absent(),
-    this.childrenCovered = const Value.absent(),
+    this.numberOfChildrenCovered = const Value.absent(),
     this.coverChildren = const Value.absent(),
     this.spouseAgeBracket = const Value.absent(),
   }) : quoteId = Value(quoteId);
@@ -1725,8 +1694,7 @@ class QuoteSetupsCompanion extends UpdateCompanion<QuoteSetup> {
     Expression<String>? ageBracket,
     Expression<String>? inPatientCoverLimit,
     Expression<String>? spouseCovered,
-    Expression<String>? numberOfChildren,
-    Expression<String>? childrenCovered,
+    Expression<String>? numberOfChildrenCovered,
     Expression<String>? coverChildren,
     Expression<String>? spouseAgeBracket,
   }) {
@@ -1739,8 +1707,8 @@ class QuoteSetupsCompanion extends UpdateCompanion<QuoteSetup> {
       if (inPatientCoverLimit != null)
         'in_patient_cover_limit': inPatientCoverLimit,
       if (spouseCovered != null) 'spouse_covered': spouseCovered,
-      if (numberOfChildren != null) 'number_of_children': numberOfChildren,
-      if (childrenCovered != null) 'children_covered': childrenCovered,
+      if (numberOfChildrenCovered != null)
+        'number_of_children_covered': numberOfChildrenCovered,
       if (coverChildren != null) 'cover_children': coverChildren,
       if (spouseAgeBracket != null) 'spouse_age_bracket': spouseAgeBracket,
     });
@@ -1754,8 +1722,7 @@ class QuoteSetupsCompanion extends UpdateCompanion<QuoteSetup> {
       Value<String?>? ageBracket,
       Value<String?>? inPatientCoverLimit,
       Value<String?>? spouseCovered,
-      Value<String?>? numberOfChildren,
-      Value<String?>? childrenCovered,
+      Value<String?>? numberOfChildrenCovered,
       Value<String?>? coverChildren,
       Value<String?>? spouseAgeBracket}) {
     return QuoteSetupsCompanion(
@@ -1766,8 +1733,8 @@ class QuoteSetupsCompanion extends UpdateCompanion<QuoteSetup> {
       ageBracket: ageBracket ?? this.ageBracket,
       inPatientCoverLimit: inPatientCoverLimit ?? this.inPatientCoverLimit,
       spouseCovered: spouseCovered ?? this.spouseCovered,
-      numberOfChildren: numberOfChildren ?? this.numberOfChildren,
-      childrenCovered: childrenCovered ?? this.childrenCovered,
+      numberOfChildrenCovered:
+          numberOfChildrenCovered ?? this.numberOfChildrenCovered,
       coverChildren: coverChildren ?? this.coverChildren,
       spouseAgeBracket: spouseAgeBracket ?? this.spouseAgeBracket,
     );
@@ -1798,11 +1765,9 @@ class QuoteSetupsCompanion extends UpdateCompanion<QuoteSetup> {
     if (spouseCovered.present) {
       map['spouse_covered'] = Variable<String>(spouseCovered.value);
     }
-    if (numberOfChildren.present) {
-      map['number_of_children'] = Variable<String>(numberOfChildren.value);
-    }
-    if (childrenCovered.present) {
-      map['children_covered'] = Variable<String>(childrenCovered.value);
+    if (numberOfChildrenCovered.present) {
+      map['number_of_children_covered'] =
+          Variable<String>(numberOfChildrenCovered.value);
     }
     if (coverChildren.present) {
       map['cover_children'] = Variable<String>(coverChildren.value);
@@ -1823,8 +1788,7 @@ class QuoteSetupsCompanion extends UpdateCompanion<QuoteSetup> {
           ..write('ageBracket: $ageBracket, ')
           ..write('inPatientCoverLimit: $inPatientCoverLimit, ')
           ..write('spouseCovered: $spouseCovered, ')
-          ..write('numberOfChildren: $numberOfChildren, ')
-          ..write('childrenCovered: $childrenCovered, ')
+          ..write('numberOfChildrenCovered: $numberOfChildrenCovered, ')
           ..write('coverChildren: $coverChildren, ')
           ..write('spouseAgeBracket: $spouseAgeBracket')
           ..write(')'))
