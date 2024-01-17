@@ -8,10 +8,7 @@ class QuotePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => QuoteBloc(),
-      child: const QuoteView(),
-    );
+    return const QuoteView();
   }
 }
 

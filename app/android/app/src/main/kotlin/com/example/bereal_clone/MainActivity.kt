@@ -1,4 +1,4 @@
-package com.example.bereal_clone
+package com.example.dentsu_lms
 
 import io.flutter.embedding.android.FlutterActivity
 

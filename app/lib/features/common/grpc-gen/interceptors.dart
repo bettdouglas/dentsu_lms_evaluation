@@ -1,7 +1,7 @@
 import 'package:grpc/grpc.dart';
 import 'package:lms_app/features/authentication/auth/auth.dart';
 
-class TokenClientInterceptor implements ClientInterceptor {
+class TokenClientInterceptor extends ClientInterceptor {
   final AuthRepository authRepository;
 
   TokenClientInterceptor(this.authRepository);
@@ -20,7 +20,7 @@ class TokenClientInterceptor implements ClientInterceptor {
         ],
       ),
     );
-    return interceptStreaming(method, requests, modifiedOptions, invoker);
+    return super.interceptStreaming(method, requests, modifiedOptions, invoker);
   }
 
   @override
@@ -39,7 +39,7 @@ class TokenClientInterceptor implements ClientInterceptor {
         ],
       ),
     );
-    return interceptUnary(method, request, modifiedOptions, invoker);
+    return super.interceptUnary(method, request, modifiedOptions, invoker);
   }
 
   Future<void> _injectToken(Map<String, String> metadata, String uri) async {

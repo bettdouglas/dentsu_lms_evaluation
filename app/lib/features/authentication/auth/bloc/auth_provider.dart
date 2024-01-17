@@ -57,7 +57,7 @@ class AuthProvider {
     try {
       final result = await agentServiceClient.getAgentFromToken(
         GetAgentFromTokenRequest(),
-        options: CallOptions(metadata: {'Authentication': token}),
+        options: CallOptions(metadata: {'authorization': token}),
       );
       return right(result.agent);
     } on GrpcError catch (e) {

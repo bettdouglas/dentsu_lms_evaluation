@@ -12,7 +12,7 @@ class LMSAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 1,
-      automaticallyImplyLeading: false,
+      automaticallyImplyLeading: true,
       title: SvgPicture.asset(
         'assets/svg/dc_logo.svg',
         height: 25.h,

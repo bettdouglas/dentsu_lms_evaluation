@@ -14,6 +14,11 @@ import 'package:lms_app/features/common/grpc-gen/interceptors.dart';
 import 'package:lms_app/features/common/grpc-gen/lead_service.pbgrpc.dart';
 import 'package:lms_app/features/common/grpc-gen/quote_benefit_service.pbgrpc.dart';
 import 'package:lms_app/features/common/grpc-gen/quote_setup_service.pbgrpc.dart';
+import 'package:lms_app/features/create_lead/bloc/create_lead_bloc.dart';
+import 'package:lms_app/features/lead/bloc/lead_bloc.dart';
+import 'package:lms_app/features/leads/bloc/leads_bloc.dart';
+import 'package:lms_app/features/quote/bloc/quote_bloc.dart';
+import 'package:lms_app/features/quotes/bloc/quotes_bloc.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -35,13 +40,6 @@ class App extends StatelessWidget {
 
     final interceptors = [TokenClientInterceptor(authRepository)];
 
-    final clients = [
-      AgentServiceClient(channel, interceptors: interceptors),
-      LeadServiceClient(channel, interceptors: interceptors),
-      QuoteBenefitServiceClient(channel, interceptors: interceptors),
-      QuoteSetupServiceClient(channel, interceptors: interceptors),
-    ];
-
     const schemeColor = FlexScheme.bahamaBlue;
     final textStyle = GoogleFonts.dmSans();
 
@@ -53,7 +51,30 @@ class App extends StatelessWidget {
             create: (context) => authRepository,
             lazy: false,
           ),
-          ...clients.map((e) => RepositoryProvider(create: (context) => e)),
+          RepositoryProvider(
+            create: (_) => AgentServiceClient(
+              channel,
+              interceptors: interceptors,
+            ),
+          ),
+          RepositoryProvider(
+            create: (_) => LeadServiceClient(
+              channel,
+              interceptors: interceptors,
+            ),
+          ),
+          RepositoryProvider(
+            create: (_) => QuoteBenefitServiceClient(
+              channel,
+              interceptors: interceptors,
+            ),
+          ),
+          RepositoryProvider(
+            create: (_) => QuoteSetupServiceClient(
+              channel,
+              interceptors: interceptors,
+            ),
+          ),
         ],
         child: MultiBlocProvider(
           providers: [
@@ -68,6 +89,25 @@ class App extends StatelessWidget {
               ),
             ),
             BlocProvider(create: (_) => ActivePageBloc()),
+            BlocProvider(
+              create: (context) => CreateLeadBloc(
+                leadServiceClient: context.read<LeadServiceClient>(),
+              ),
+            ),
+            BlocProvider(
+              create: (context) => LeadsBloc(
+                leadServiceClient: context.read<LeadServiceClient>(),
+              )..add(const LeadsEvent.started()),
+            ),
+            BlocProvider(
+              create: (context) => LeadBloc(),
+            ),
+            BlocProvider(
+              create: (context) => QuoteBloc(),
+            ),
+            BlocProvider(
+              create: (context) => QuotesBloc(),
+            ),
           ],
           child: MaterialApp(
             theme: FlexThemeData.light(
@@ -76,9 +116,17 @@ class App extends StatelessWidget {
             ).copyWith(
               inputDecorationTheme: InputDecorationTheme(
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10.r)),
+                  borderRadius: BorderRadius.all(Radius.circular(10.h)),
                 ),
                 fillColor: Colors.white,
+                // constraints: BoxConstraints(
+                //   maxHeight: 65.h,
+                //   minHeight: 65.h,
+                // ),
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: 12.h,
+                  horizontal: 16.w,
+                ),
                 filled: true,
                 hintStyle: textStyle.copyWith(
                   fontWeight: FontWeight.w400,

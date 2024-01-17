@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.bereal_clone">
+    package="com.example.dentsu_lms">
    <application
         android:label="bereal_clone"
         android:name="${applicationName}"

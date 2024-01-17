@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lms_app/features/common/grpc-gen/lead_service.pbgrpc.dart';
+import 'package:lms_app/features/common/widgets/error_message_widget.dart';
 
 import '../leads.dart';
 
@@ -9,12 +9,7 @@ class LeadsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => LeadsBloc(
-        leadServiceClient: context.read<LeadServiceClient>(),
-      ),
-      child: const LeadsView(),
-    );
+    return const LeadsView();
   }
 }
 
@@ -25,14 +20,36 @@ class LeadsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<LeadsBloc, LeadsState>(
       builder: (context, state) {
-        // TODO: return correct widget based on the state.
-        return ListView(
-          children: [
-            Text(
-              'Dashboard',
-              style: Theme.of(context).textTheme.headlineLarge,
-            ),
-          ],
+        return state.when(
+          initial: () => const SizedBox(),
+          loading: () => const Center(
+            child: CircularProgressIndicator.adaptive(),
+          ),
+          loaded: (leads) {
+            if (leads.isEmpty) {
+              return const Center(
+                child: Text(
+                  'You have no leads. Your leads will be listed here.',
+                ),
+              );
+            }
+            return Card(
+              child: ListView.builder(
+                itemBuilder: (context, idx) => ListTile(
+                  title: Text(leads[idx].name),
+                  tileColor: idx.isOdd ? const Color(0XFFFAF8F8) : Colors.white,
+                  leading: Text((idx + 1).toString().padLeft(2, '0')),
+                ),
+                itemCount: leads.length,
+              ),
+            );
+          },
+          error: (error, _) => ErrorMessageWidgetWithRetry(
+            error,
+            onRetry: () {
+              context.read<LeadsBloc>().add(const LeadsEvent.getLeads());
+            },
+          ),
         );
       },
     );

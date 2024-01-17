@@ -8,10 +8,7 @@ class LeadPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => LeadBloc(),
-      child: const LeadView(),
-    );
+    return const LeadView();
   }
 }
 

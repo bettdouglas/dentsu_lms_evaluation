@@ -7,6 +7,7 @@ import 'package:lms_app/features/authentication/auth/view/splash_page.dart';
 import 'package:lms_app/features/authentication/login/login.dart';
 import 'package:lms_app/features/authentication/sign_up/sign_up.dart';
 import 'package:lms_app/features/common/widgets/app_bar.dart';
+import 'package:lms_app/features/common/widgets/error_message_widget.dart';
 
 class AuthPage extends StatelessWidget {
   const AuthPage({super.key});
@@ -32,6 +33,7 @@ class AuthView extends StatelessWidget {
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
         return Scaffold(
+          backgroundColor: const Color(0XFFF2F2F2),
           appBar: state.maybeWhen(
             orElse: () => null,
             authenticated: (_) => const LMSAppBar(),
@@ -46,7 +48,12 @@ class AuthView extends StatelessWidget {
             authenticated: (_) => HomePage(),
             unAuthenticated: () => const LoginPage(),
             error: (msg) => Center(
-              child: Text(msg),
+              child: ErrorMessageWidgetWithRetry(
+                msg,
+                onRetry: () {
+                  context.read<AuthBloc>().add(const AuthEvent.started());
+                },
+              ),
             ),
           ),
           bottomNavigationBar: state.maybeWhen(

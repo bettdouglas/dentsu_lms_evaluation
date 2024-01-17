@@ -13,7 +13,9 @@ class LeadsBloc extends Bloc<LeadsEvent, LeadsState> {
       : super(const LeadsState.initial()) {
     on<LeadsEvent>((event, emit) async {
       await event.when(
-        started: () async {},
+        started: () async {
+          add(const LeadsEvent.getLeads());
+        },
         getLeads: () async {
           emit(const LeadsState.loading());
           try {
