@@ -71,6 +71,8 @@ void main() {
   test('can create leads', () async {
     expect(agent1Lead1.sourceAgentId, equals(agent1.id));
     expect(agent2Lead1.sourceAgentId, equals(agent2.id));
+    expect(agent1Lead2.id, isNot(agent1Lead1.id));
+    expect(agent2Lead3.id, isNot(agent1Lead1.id));
   });
 
   test('can get leads of an agent', () async {
