@@ -28,6 +28,7 @@ void main() {
       agentId: agent1.id,
       phone: 'phone',
       customerType: 'customerType',
+      productRequested: 'Mortgage',
     );
     agent1Lead2 = await lmsDb.addLead(
       name: 'Agent 1 Lead 2',
@@ -36,6 +37,7 @@ void main() {
       agentId: agent1.id,
       phone: 'phone',
       customerType: 'customerType',
+      productRequested: 'Mortgage',
     );
     agent2Lead1 = await lmsDb.addLead(
       name: 'Agent 2 Lead 1',
@@ -44,6 +46,7 @@ void main() {
       agentId: agent2.id,
       phone: 'phone',
       customerType: 'customerType',
+      productRequested: 'Mortgage',
     );
     agent2Lead2 = await lmsDb.addLead(
       name: 'Agent 2 Lead 2',
@@ -52,6 +55,7 @@ void main() {
       agentId: agent2.id,
       phone: 'phone',
       customerType: 'customerType',
+      productRequested: 'Mortgage',
     );
     agent2Lead3 = await lmsDb.addLead(
       name: 'Agent 2 Lead 3',
@@ -60,6 +64,7 @@ void main() {
       agentId: agent2.id,
       phone: 'phone',
       customerType: 'customerType',
+      productRequested: 'Mortgage',
     );
   });
 

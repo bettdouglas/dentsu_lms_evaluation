@@ -26,6 +26,7 @@ class LeadService extends LeadServiceBase {
         final location = lead.location;
         final phone = lead.phone;
         final customerType = lead.customerType;
+        final productRequested = lead.productRequested;
 
         final savedLead = await lmsDb.addLead(
           name: name,
@@ -34,6 +35,7 @@ class LeadService extends LeadServiceBase {
           agentId: agentId,
           customerType: customerType,
           phone: phone,
+          productRequested: productRequested,
         );
         return CreateLeadResponse(lead: savedLead.asGrpcLead());
       },

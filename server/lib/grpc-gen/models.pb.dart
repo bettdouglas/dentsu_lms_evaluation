@@ -145,6 +145,7 @@ class Lead extends $pb.GeneratedMessage {
     ..aOS(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'accountNumber', protoName: 'accountNumber')
     ..aOS(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'customerType', protoName: 'customerType')
     ..aOM<$0.Timestamp>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'appointmentDate', subBuilder: $0.Timestamp.create)
+    ..aOS(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'productRequested', protoName: 'productRequested')
     ..hasRequiredFields = false
   ;
 
@@ -161,6 +162,7 @@ class Lead extends $pb.GeneratedMessage {
     $core.String? accountNumber,
     $core.String? customerType,
     $0.Timestamp? appointmentDate,
+    $core.String? productRequested,
   }) {
     final _result = create();
     if (id != null) {
@@ -195,6 +197,9 @@ class Lead extends $pb.GeneratedMessage {
     }
     if (appointmentDate != null) {
       _result.appointmentDate = appointmentDate;
+    }
+    if (productRequested != null) {
+      _result.productRequested = productRequested;
     }
     return _result;
   }
@@ -323,6 +328,15 @@ class Lead extends $pb.GeneratedMessage {
   void clearAppointmentDate() => clearField(11);
   @$pb.TagNumber(11)
   $0.Timestamp ensureAppointmentDate() => $_ensure(10);
+
+  @$pb.TagNumber(12)
+  $core.String get productRequested => $_getSZ(11);
+  @$pb.TagNumber(12)
+  set productRequested($core.String v) { $_setString(11, v); }
+  @$pb.TagNumber(12)
+  $core.bool hasProductRequested() => $_has(11);
+  @$pb.TagNumber(12)
+  void clearProductRequested() => clearField(12);
 }
 
 class QuoteSetup extends $pb.GeneratedMessage {

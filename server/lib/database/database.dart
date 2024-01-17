@@ -40,6 +40,9 @@ class Leads extends GenericTable {
   TextColumn get customerType => text()();
   DateTimeColumn get appointmentDate => dateTime().nullable()();
   IntColumn get sourceAgentId => integer().references(Agents, #id)();
+  TextColumn get source => text()();
+  TextColumn get productRequested => text()();
+  TextColumn get productSold => text().nullable()();
 }
 
 class Quotes extends GenericTable {
@@ -149,6 +152,7 @@ class LmsDb extends _$LmsDb {
     required int agentId,
     required String phone,
     required String customerType,
+    required String productRequested,
   }) async {
     final result = await into(leads).insert(
       LeadsCompanion.insert(
@@ -159,6 +163,8 @@ class LmsDb extends _$LmsDb {
         customerType: customerType,
         phone: phone,
         status: 'New',
+        source: 'Mobile',
+        productRequested: productRequested,
       ),
     );
     return getLead(result).getSingleOrNull().then((value) => value!);

@@ -445,6 +445,23 @@ class $LeadsTable extends Leads with TableInfo<$LeadsTable, Lead> {
       requiredDuringInsert: true,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('REFERENCES agents (id)'));
+  static const VerificationMeta _sourceMeta = const VerificationMeta('source');
+  @override
+  late final GeneratedColumn<String> source = GeneratedColumn<String>(
+      'source', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _productRequestedMeta =
+      const VerificationMeta('productRequested');
+  @override
+  late final GeneratedColumn<String> productRequested = GeneratedColumn<String>(
+      'product_requested', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _productSoldMeta =
+      const VerificationMeta('productSold');
+  @override
+  late final GeneratedColumn<String> productSold = GeneratedColumn<String>(
+      'product_sold', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -458,7 +475,10 @@ class $LeadsTable extends Leads with TableInfo<$LeadsTable, Lead> {
         accountNumber,
         customerType,
         appointmentDate,
-        sourceAgentId
+        sourceAgentId,
+        source,
+        productRequested,
+        productSold
       ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -539,6 +559,26 @@ class $LeadsTable extends Leads with TableInfo<$LeadsTable, Lead> {
     } else if (isInserting) {
       context.missing(_sourceAgentIdMeta);
     }
+    if (data.containsKey('source')) {
+      context.handle(_sourceMeta,
+          source.isAcceptableOrUnknown(data['source']!, _sourceMeta));
+    } else if (isInserting) {
+      context.missing(_sourceMeta);
+    }
+    if (data.containsKey('product_requested')) {
+      context.handle(
+          _productRequestedMeta,
+          productRequested.isAcceptableOrUnknown(
+              data['product_requested']!, _productRequestedMeta));
+    } else if (isInserting) {
+      context.missing(_productRequestedMeta);
+    }
+    if (data.containsKey('product_sold')) {
+      context.handle(
+          _productSoldMeta,
+          productSold.isAcceptableOrUnknown(
+              data['product_sold']!, _productSoldMeta));
+    }
     return context;
   }
 
@@ -572,6 +612,12 @@ class $LeadsTable extends Leads with TableInfo<$LeadsTable, Lead> {
           DriftSqlType.dateTime, data['${effectivePrefix}appointment_date']),
       sourceAgentId: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}source_agent_id'])!,
+      source: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}source'])!,
+      productRequested: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}product_requested'])!,
+      productSold: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}product_sold']),
     );
   }
 
@@ -595,6 +641,9 @@ class Lead extends DataClass implements Insertable<Lead> {
   final String customerType;
   final DateTime? appointmentDate;
   final int sourceAgentId;
+  final String source;
+  final String productRequested;
+  final String? productSold;
   const Lead(
       {required this.id,
       required this.createdAt,
@@ -607,7 +656,10 @@ class Lead extends DataClass implements Insertable<Lead> {
       required this.accountNumber,
       required this.customerType,
       this.appointmentDate,
-      required this.sourceAgentId});
+      required this.sourceAgentId,
+      required this.source,
+      required this.productRequested,
+      this.productSold});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -627,6 +679,11 @@ class Lead extends DataClass implements Insertable<Lead> {
       map['appointment_date'] = Variable<DateTime>(appointmentDate);
     }
     map['source_agent_id'] = Variable<int>(sourceAgentId);
+    map['source'] = Variable<String>(source);
+    map['product_requested'] = Variable<String>(productRequested);
+    if (!nullToAbsent || productSold != null) {
+      map['product_sold'] = Variable<String>(productSold);
+    }
     return map;
   }
 
@@ -648,6 +705,11 @@ class Lead extends DataClass implements Insertable<Lead> {
           ? const Value.absent()
           : Value(appointmentDate),
       sourceAgentId: Value(sourceAgentId),
+      source: Value(source),
+      productRequested: Value(productRequested),
+      productSold: productSold == null && nullToAbsent
+          ? const Value.absent()
+          : Value(productSold),
     );
   }
 
@@ -667,6 +729,9 @@ class Lead extends DataClass implements Insertable<Lead> {
       customerType: serializer.fromJson<String>(json['customerType']),
       appointmentDate: serializer.fromJson<DateTime?>(json['appointmentDate']),
       sourceAgentId: serializer.fromJson<int>(json['sourceAgentId']),
+      source: serializer.fromJson<String>(json['source']),
+      productRequested: serializer.fromJson<String>(json['productRequested']),
+      productSold: serializer.fromJson<String?>(json['productSold']),
     );
   }
   @override
@@ -685,6 +750,9 @@ class Lead extends DataClass implements Insertable<Lead> {
       'customerType': serializer.toJson<String>(customerType),
       'appointmentDate': serializer.toJson<DateTime?>(appointmentDate),
       'sourceAgentId': serializer.toJson<int>(sourceAgentId),
+      'source': serializer.toJson<String>(source),
+      'productRequested': serializer.toJson<String>(productRequested),
+      'productSold': serializer.toJson<String?>(productSold),
     };
   }
 
@@ -700,7 +768,10 @@ class Lead extends DataClass implements Insertable<Lead> {
           String? accountNumber,
           String? customerType,
           Value<DateTime?> appointmentDate = const Value.absent(),
-          int? sourceAgentId}) =>
+          int? sourceAgentId,
+          String? source,
+          String? productRequested,
+          Value<String?> productSold = const Value.absent()}) =>
       Lead(
         id: id ?? this.id,
         createdAt: createdAt ?? this.createdAt,
@@ -716,6 +787,9 @@ class Lead extends DataClass implements Insertable<Lead> {
             ? appointmentDate.value
             : this.appointmentDate,
         sourceAgentId: sourceAgentId ?? this.sourceAgentId,
+        source: source ?? this.source,
+        productRequested: productRequested ?? this.productRequested,
+        productSold: productSold.present ? productSold.value : this.productSold,
       );
   @override
   String toString() {
@@ -731,7 +805,10 @@ class Lead extends DataClass implements Insertable<Lead> {
           ..write('accountNumber: $accountNumber, ')
           ..write('customerType: $customerType, ')
           ..write('appointmentDate: $appointmentDate, ')
-          ..write('sourceAgentId: $sourceAgentId')
+          ..write('sourceAgentId: $sourceAgentId, ')
+          ..write('source: $source, ')
+          ..write('productRequested: $productRequested, ')
+          ..write('productSold: $productSold')
           ..write(')'))
         .toString();
   }
@@ -749,7 +826,10 @@ class Lead extends DataClass implements Insertable<Lead> {
       accountNumber,
       customerType,
       appointmentDate,
-      sourceAgentId);
+      sourceAgentId,
+      source,
+      productRequested,
+      productSold);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -765,7 +845,10 @@ class Lead extends DataClass implements Insertable<Lead> {
           other.accountNumber == this.accountNumber &&
           other.customerType == this.customerType &&
           other.appointmentDate == this.appointmentDate &&
-          other.sourceAgentId == this.sourceAgentId);
+          other.sourceAgentId == this.sourceAgentId &&
+          other.source == this.source &&
+          other.productRequested == this.productRequested &&
+          other.productSold == this.productSold);
 }
 
 class LeadsCompanion extends UpdateCompanion<Lead> {
@@ -781,6 +864,9 @@ class LeadsCompanion extends UpdateCompanion<Lead> {
   final Value<String> customerType;
   final Value<DateTime?> appointmentDate;
   final Value<int> sourceAgentId;
+  final Value<String> source;
+  final Value<String> productRequested;
+  final Value<String?> productSold;
   const LeadsCompanion({
     this.id = const Value.absent(),
     this.createdAt = const Value.absent(),
@@ -794,6 +880,9 @@ class LeadsCompanion extends UpdateCompanion<Lead> {
     this.customerType = const Value.absent(),
     this.appointmentDate = const Value.absent(),
     this.sourceAgentId = const Value.absent(),
+    this.source = const Value.absent(),
+    this.productRequested = const Value.absent(),
+    this.productSold = const Value.absent(),
   });
   LeadsCompanion.insert({
     this.id = const Value.absent(),
@@ -808,13 +897,18 @@ class LeadsCompanion extends UpdateCompanion<Lead> {
     required String customerType,
     this.appointmentDate = const Value.absent(),
     required int sourceAgentId,
+    required String source,
+    required String productRequested,
+    this.productSold = const Value.absent(),
   })  : name = Value(name),
         email = Value(email),
         location = Value(location),
         status = Value(status),
         phone = Value(phone),
         customerType = Value(customerType),
-        sourceAgentId = Value(sourceAgentId);
+        sourceAgentId = Value(sourceAgentId),
+        source = Value(source),
+        productRequested = Value(productRequested);
   static Insertable<Lead> custom({
     Expression<int>? id,
     Expression<DateTime>? createdAt,
@@ -828,6 +922,9 @@ class LeadsCompanion extends UpdateCompanion<Lead> {
     Expression<String>? customerType,
     Expression<DateTime>? appointmentDate,
     Expression<int>? sourceAgentId,
+    Expression<String>? source,
+    Expression<String>? productRequested,
+    Expression<String>? productSold,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -842,6 +939,9 @@ class LeadsCompanion extends UpdateCompanion<Lead> {
       if (customerType != null) 'customer_type': customerType,
       if (appointmentDate != null) 'appointment_date': appointmentDate,
       if (sourceAgentId != null) 'source_agent_id': sourceAgentId,
+      if (source != null) 'source': source,
+      if (productRequested != null) 'product_requested': productRequested,
+      if (productSold != null) 'product_sold': productSold,
     });
   }
 
@@ -857,7 +957,10 @@ class LeadsCompanion extends UpdateCompanion<Lead> {
       Value<String>? accountNumber,
       Value<String>? customerType,
       Value<DateTime?>? appointmentDate,
-      Value<int>? sourceAgentId}) {
+      Value<int>? sourceAgentId,
+      Value<String>? source,
+      Value<String>? productRequested,
+      Value<String?>? productSold}) {
     return LeadsCompanion(
       id: id ?? this.id,
       createdAt: createdAt ?? this.createdAt,
@@ -871,6 +974,9 @@ class LeadsCompanion extends UpdateCompanion<Lead> {
       customerType: customerType ?? this.customerType,
       appointmentDate: appointmentDate ?? this.appointmentDate,
       sourceAgentId: sourceAgentId ?? this.sourceAgentId,
+      source: source ?? this.source,
+      productRequested: productRequested ?? this.productRequested,
+      productSold: productSold ?? this.productSold,
     );
   }
 
@@ -913,6 +1019,15 @@ class LeadsCompanion extends UpdateCompanion<Lead> {
     if (sourceAgentId.present) {
       map['source_agent_id'] = Variable<int>(sourceAgentId.value);
     }
+    if (source.present) {
+      map['source'] = Variable<String>(source.value);
+    }
+    if (productRequested.present) {
+      map['product_requested'] = Variable<String>(productRequested.value);
+    }
+    if (productSold.present) {
+      map['product_sold'] = Variable<String>(productSold.value);
+    }
     return map;
   }
 
@@ -930,7 +1045,10 @@ class LeadsCompanion extends UpdateCompanion<Lead> {
           ..write('accountNumber: $accountNumber, ')
           ..write('customerType: $customerType, ')
           ..write('appointmentDate: $appointmentDate, ')
-          ..write('sourceAgentId: $sourceAgentId')
+          ..write('sourceAgentId: $sourceAgentId, ')
+          ..write('source: $source, ')
+          ..write('productRequested: $productRequested, ')
+          ..write('productSold: $productSold')
           ..write(')'))
         .toString();
   }

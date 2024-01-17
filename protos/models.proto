@@ -25,6 +25,7 @@ message Lead {
     string accountNumber = 9;
     string customerType = 10;
     google.protobuf.Timestamp appointment_date = 11;
+    string productRequested = 12;
 }
 
 message QuoteSetup {

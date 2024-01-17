@@ -38,11 +38,12 @@ const Lead$json = const {
     const {'1': 'accountNumber', '3': 9, '4': 1, '5': 9, '10': 'accountNumber'},
     const {'1': 'customerType', '3': 10, '4': 1, '5': 9, '10': 'customerType'},
     const {'1': 'appointment_date', '3': 11, '4': 1, '5': 11, '6': '.google.protobuf.Timestamp', '10': 'appointmentDate'},
+    const {'1': 'productRequested', '3': 12, '4': 1, '5': 9, '10': 'productRequested'},
   ],
 };
 
 /// Descriptor for `Lead`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List leadDescriptor = $convert.base64Decode('CgRMZWFkEg4KAmlkGAEgASgFUgJpZBISCgRuYW1lGAIgASgJUgRuYW1lEhQKBWVtYWlsGAMgASgJUgVlbWFpbBI5CgpjcmVhdGVkX2F0GAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcFIJY3JlYXRlZEF0EjkKCnVwZGF0ZWRfYXQYBSABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wUgl1cGRhdGVkQXQSGgoIbG9jYXRpb24YBiABKAlSCGxvY2F0aW9uEhYKBnN0YXR1cxgHIAEoCVIGc3RhdHVzEhQKBXBob25lGAggASgJUgVwaG9uZRIkCg1hY2NvdW50TnVtYmVyGAkgASgJUg1hY2NvdW50TnVtYmVyEiIKDGN1c3RvbWVyVHlwZRgKIAEoCVIMY3VzdG9tZXJUeXBlEkUKEGFwcG9pbnRtZW50X2RhdGUYCyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wUg9hcHBvaW50bWVudERhdGU=');
+final $typed_data.Uint8List leadDescriptor = $convert.base64Decode('CgRMZWFkEg4KAmlkGAEgASgFUgJpZBISCgRuYW1lGAIgASgJUgRuYW1lEhQKBWVtYWlsGAMgASgJUgVlbWFpbBI5CgpjcmVhdGVkX2F0GAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcFIJY3JlYXRlZEF0EjkKCnVwZGF0ZWRfYXQYBSABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wUgl1cGRhdGVkQXQSGgoIbG9jYXRpb24YBiABKAlSCGxvY2F0aW9uEhYKBnN0YXR1cxgHIAEoCVIGc3RhdHVzEhQKBXBob25lGAggASgJUgVwaG9uZRIkCg1hY2NvdW50TnVtYmVyGAkgASgJUg1hY2NvdW50TnVtYmVyEiIKDGN1c3RvbWVyVHlwZRgKIAEoCVIMY3VzdG9tZXJUeXBlEkUKEGFwcG9pbnRtZW50X2RhdGUYCyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wUg9hcHBvaW50bWVudERhdGUSKgoQcHJvZHVjdFJlcXVlc3RlZBgMIAEoCVIQcHJvZHVjdFJlcXVlc3RlZA==');
 @$core.Deprecated('Use quoteSetupDescriptor instead')
 const QuoteSetup$json = const {
   '1': 'QuoteSetup',
