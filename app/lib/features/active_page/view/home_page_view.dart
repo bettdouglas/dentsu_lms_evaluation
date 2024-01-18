@@ -28,15 +28,10 @@ class HomePage extends StatelessWidget {
         return PageView.builder(
           itemBuilder: (context, pageIndex) {
             if (pageIndex == 0) {
-              return HomePagePage(
+              return const HomePagePage(
                 title: 'Dashboard',
-                actions: const [],
-                body: ListView.builder(
-                  itemBuilder: (_, idx) => ListTile(
-                    title: Text('Tile $idx'),
-                  ),
-                  itemCount: 100,
-                ),
+                actions: [],
+                body: LeadsPage(),
               );
             } else if (pageIndex == 1) {
               return HomePagePage(

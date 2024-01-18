@@ -6,13 +6,18 @@ import 'package:lms_app/features/common/colors.dart';
 class LMSAppBar extends StatelessWidget implements PreferredSizeWidget {
   const LMSAppBar({
     super.key,
+    this.bottom,
+    this.automaticallyImplyLeading = true,
   });
+
+  final PreferredSizeWidget? bottom;
+  final bool automaticallyImplyLeading;
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 1,
-      automaticallyImplyLeading: true,
+      automaticallyImplyLeading: automaticallyImplyLeading,
       title: SvgPicture.asset(
         'assets/svg/dc_logo.svg',
         height: 25.h,
@@ -39,6 +44,7 @@ class LMSAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         SizedBox(width: 19.w),
       ],
+      bottom: bottom,
     );
   }
 

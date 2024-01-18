@@ -68,7 +68,7 @@ class NextActionButton extends StatelessWidget {
         ),
         child: Row(
           children: [
-            SizedBox(width: 12.w),
+            SizedBox(width: 20.w),
             Text(
               title,
               style: const TextStyle(color: Colors.white),
@@ -93,10 +93,41 @@ class ActionBarOptions extends StatelessWidget {
 }
 
 class BackActionButton extends StatelessWidget {
-  const BackActionButton({super.key});
+  const BackActionButton({
+    super.key,
+    required this.icon,
+    required this.title,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final String title;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        width: 175.w,
+        height: 42.h,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(90.w),
+          color: Colors.white,
+        ),
+        child: Row(
+          children: [
+            SizedBox(width: 29.w),
+            Icon(icon, color: LmsColors.pink),
+            const Spacer(),
+            Text(
+              title,
+              style: const TextStyle(color: LmsColors.pink),
+            ),
+            SizedBox(width: 29.w),
+          ],
+        ),
+      ),
+    );
   }
 }

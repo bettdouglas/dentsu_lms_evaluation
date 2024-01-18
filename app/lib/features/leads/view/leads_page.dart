@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lms_app/features/common/widgets/error_message_widget.dart';
+import 'package:lms_app/features/lead/lead.dart';
 
 import '../leads.dart';
 
@@ -34,11 +36,21 @@ class LeadsView extends StatelessWidget {
               );
             }
             return Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.r),
+              ),
               child: ListView.builder(
                 itemBuilder: (context, idx) => ListTile(
                   title: Text(leads[idx].name),
                   tileColor: idx.isOdd ? const Color(0XFFFAF8F8) : Colors.white,
                   leading: Text((idx + 1).toString().padLeft(2, '0')),
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => LeadPage(lead: leads[idx]),
+                      ),
+                    );
+                  },
                 ),
                 itemCount: leads.length,
               ),
