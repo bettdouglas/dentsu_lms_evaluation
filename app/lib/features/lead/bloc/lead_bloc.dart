@@ -13,7 +13,7 @@ class LeadBloc extends Bloc<LeadEvent, LeadState> {
     required this.leadServiceClient,
   }) : super(const LeadState.initial()) {
     on<LeadEvent>((event, emit) async {
-      event.when(
+      await event.when(
         loadLead: (leadId) async {
           try {
             final response = await leadServiceClient.getLead(

@@ -74,11 +74,12 @@ const QuoteBenefit$json = const {
     const {'1': 'personalAccident', '3': 8, '4': 1, '5': 8, '10': 'personalAccident'},
     const {'1': 'covid19Cover', '3': 9, '4': 1, '5': 8, '10': 'covid19Cover'},
     const {'1': 'id', '3': 10, '4': 1, '5': 5, '10': 'id'},
+    const {'1': 'amrefEvacuation', '3': 11, '4': 1, '5': 8, '10': 'amrefEvacuation'},
   ],
 };
 
 /// Descriptor for `QuoteBenefit`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List quoteBenefitDescriptor = $convert.base64Decode('CgxRdW90ZUJlbmVmaXQSHAoJaW5QYXRpZW50GAEgASgIUglpblBhdGllbnQSHgoKb3V0UGF0aWVudBgCIAEoCFIKb3V0UGF0aWVudBIgCgtub0NvUGF5bWVudBgDIAEoCFILbm9Db1BheW1lbnQSFgoGZGVudGFsGAQgASgIUgZkZW50YWwSGAoHb3B0aWNhbBgFIAEoCFIHb3B0aWNhbBIcCgltYXRlcm5pdHkYBiABKAhSCW1hdGVybml0eRIgCgtsYXN0RXhwZW5zZRgHIAEoCFILbGFzdEV4cGVuc2USKgoQcGVyc29uYWxBY2NpZGVudBgIIAEoCFIQcGVyc29uYWxBY2NpZGVudBIiCgxjb3ZpZDE5Q292ZXIYCSABKAhSDGNvdmlkMTlDb3ZlchIOCgJpZBgKIAEoBVICaWQ=');
+final $typed_data.Uint8List quoteBenefitDescriptor = $convert.base64Decode('CgxRdW90ZUJlbmVmaXQSHAoJaW5QYXRpZW50GAEgASgIUglpblBhdGllbnQSHgoKb3V0UGF0aWVudBgCIAEoCFIKb3V0UGF0aWVudBIgCgtub0NvUGF5bWVudBgDIAEoCFILbm9Db1BheW1lbnQSFgoGZGVudGFsGAQgASgIUgZkZW50YWwSGAoHb3B0aWNhbBgFIAEoCFIHb3B0aWNhbBIcCgltYXRlcm5pdHkYBiABKAhSCW1hdGVybml0eRIgCgtsYXN0RXhwZW5zZRgHIAEoCFILbGFzdEV4cGVuc2USKgoQcGVyc29uYWxBY2NpZGVudBgIIAEoCFIQcGVyc29uYWxBY2NpZGVudBIiCgxjb3ZpZDE5Q292ZXIYCSABKAhSDGNvdmlkMTlDb3ZlchIOCgJpZBgKIAEoBVICaWQSKAoPYW1yZWZFdmFjdWF0aW9uGAsgASgIUg9hbXJlZkV2YWN1YXRpb24=');
 @$core.Deprecated('Use quoteDescriptor instead')
 const Quote$json = const {
   '1': 'Quote',

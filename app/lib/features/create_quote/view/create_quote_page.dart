@@ -78,7 +78,7 @@ class _CreateQuoteViewState extends State<CreateQuoteView> {
                           loaded: (leads) {
                             if (leads.isEmpty) {
                               return ErrorMessageWidgetWithRetry(
-                                'You have no leads. Please register one on the Leads page',
+                                'You have no leads. \nPlease register a new lead to create quotes',
                                 onRetry: () {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
@@ -87,7 +87,7 @@ class _CreateQuoteViewState extends State<CreateQuoteView> {
                                     ),
                                   );
                                 },
-                                retryText: 'Create a new lead',
+                                retryText: 'Register a new lead',
                               );
                             }
                             return FormBuilderDropdown<Lead>(

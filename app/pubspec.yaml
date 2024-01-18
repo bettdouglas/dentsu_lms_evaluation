@@ -49,6 +49,8 @@ dependencies:
   flutter_svg: ^2.0.9
   flutter_screenutil: ^5.9.0
   google_fonts: ^4.0.4
+  autoscale_tabbarview: ^1.0.2
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:

@@ -482,6 +482,7 @@ class QuoteBenefit extends $pb.GeneratedMessage {
     ..aOB(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'personalAccident', protoName: 'personalAccident')
     ..aOB(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'covid19Cover', protoName: 'covid19Cover')
     ..a<$core.int>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.O3)
+    ..aOB(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'amrefEvacuation', protoName: 'amrefEvacuation')
     ..hasRequiredFields = false
   ;
 
@@ -497,6 +498,7 @@ class QuoteBenefit extends $pb.GeneratedMessage {
     $core.bool? personalAccident,
     $core.bool? covid19Cover,
     $core.int? id,
+    $core.bool? amrefEvacuation,
   }) {
     final _result = create();
     if (inPatient != null) {
@@ -528,6 +530,9 @@ class QuoteBenefit extends $pb.GeneratedMessage {
     }
     if (id != null) {
       _result.id = id;
+    }
+    if (amrefEvacuation != null) {
+      _result.amrefEvacuation = amrefEvacuation;
     }
     return _result;
   }
@@ -641,6 +646,15 @@ class QuoteBenefit extends $pb.GeneratedMessage {
   $core.bool hasId() => $_has(9);
   @$pb.TagNumber(10)
   void clearId() => clearField(10);
+
+  @$pb.TagNumber(11)
+  $core.bool get amrefEvacuation => $_getBF(10);
+  @$pb.TagNumber(11)
+  set amrefEvacuation($core.bool v) { $_setBool(10, v); }
+  @$pb.TagNumber(11)
+  $core.bool hasAmrefEvacuation() => $_has(10);
+  @$pb.TagNumber(11)
+  void clearAmrefEvacuation() => clearField(11);
 }
 
 class Quote extends $pb.GeneratedMessage {

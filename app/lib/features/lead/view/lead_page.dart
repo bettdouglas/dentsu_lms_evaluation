@@ -3,33 +3,35 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:lms_app/features/common/colors.dart';
 import 'package:lms_app/features/common/grpc-gen/models.pb.dart';
 import 'package:lms_app/features/common/widgets/action_button.dart';
 import 'package:lms_app/features/common/widgets/app_bar.dart';
+import 'package:lms_app/features/common/widgets/error_message_widget.dart';
 
 import '../lead.dart';
 
 class LeadPage extends StatelessWidget {
   const LeadPage({
     super.key,
-    required this.lead,
+    required this.leadId,
   });
 
-  final Lead lead;
+  final int leadId;
   @override
   Widget build(BuildContext context) {
-    return LeadView(lead: lead);
+    return LeadView(leadId: leadId);
   }
 }
 
 class LeadView extends StatelessWidget {
   const LeadView({
     super.key,
-    required this.lead,
+    required this.leadId,
   });
 
-  final Lead lead;
+  final int leadId;
 
   @override
   Widget build(BuildContext context) {
@@ -40,114 +42,136 @@ class LeadView extends StatelessWidget {
           appBar: const LMSAppBar(
             automaticallyImplyLeading: false,
           ),
-          body: Padding(
-            padding: EdgeInsets.all(4.h),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  SizedBox(height: 16.h),
-                  LeadPageNavigator(
-                    leadId: lead.id.toString(),
-                  ),
-                  SizedBox(height: 16.h),
-                  LeadStatusCard(status: lead.status),
-                  SizedBox(height: 36.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          body: state.when(
+            initial: () => const SizedBox(),
+            loading: () => const Center(
+              child: CircularProgressIndicator.adaptive(),
+            ),
+            error: (error, _) => ErrorMessageWidgetWithRetry(
+              error,
+              onRetry: () {
+                context.read<LeadBloc>().add(LeadEvent.loadLead(leadId));
+              },
+            ),
+            loaded: (lead) {
+              final format = DateFormat('d MMMM yyyy');
+
+              return Padding(
+                padding: EdgeInsets.all(4.h),
+                child: SingleChildScrollView(
+                  child: Column(
                     children: [
-                      BackActionButton(
-                        icon: Icons.close,
-                        title: 'Cancel lead',
-                        onTap: () {},
+                      SizedBox(height: 16.h),
+                      LeadPageNavigator(
+                        leadId: lead.id.toString(),
                       ),
-                      NextActionButton(
-                        icon: Icons.arrow_forward_ios,
-                        title: 'Next',
-                        onTap: () {},
+                      SizedBox(height: 16.h),
+                      LeadStatusCard(status: lead.status),
+                      SizedBox(height: 36.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          BackActionButton(
+                            icon: Icons.close,
+                            title: 'Cancel lead',
+                            onTap: () {},
+                          ),
+                          NextActionButton(
+                            icon: Icons.arrow_forward_ios,
+                            title: 'Next',
+                            onTap: () {},
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 30.h),
+                      Card(
+                        child: Padding(
+                          padding: EdgeInsets.all(36.r),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              LeadProfileTile(lead: lead),
+                              SizedBox(height: 30.h),
+                              LeadDateDetailsWidget(
+                                title: 'Lead Created',
+                                date: format.format(
+                                    lead.createdAt.toDateTime(toLocal: true)),
+                              ),
+                              SizedBox(height: 17.h),
+                              LeadDateDetailsWidget(
+                                title: 'Last Contacted',
+                                date: format.format(DateTime.now()),
+                              ),
+                              SizedBox(height: 17.h),
+                              LeadDateDetailsWidget(
+                                title: 'Next Appointment',
+                                date: format.format(
+                                  DateTime.now().add(
+                                    const Duration(days: 9),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 17.h),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 30.h),
+                      Card(
+                        child: Padding(
+                          padding: EdgeInsets.all(36.r),
+                          child: DefaultTabController(
+                            length: 2,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const TabBar(
+                                  indicatorColor:
+                                      LmsColors.buttonBackgroundColor,
+                                  labelColor: LmsColors.pink,
+                                  unselectedLabelColor: Color(0XFF666666),
+                                  tabs: [
+                                    Tab(text: 'Lead Details'),
+                                    Tab(
+                                      text: 'Assigned Lead',
+                                    ),
+                                  ],
+                                ),
+                                const LeadProductDetailsWidget(
+                                  title: 'Lead Source',
+                                  detail: 'App',
+                                ),
+                                SizedBox(height: 23.h),
+                                LeadProductDetailsWidget(
+                                  title: 'Product Requested',
+                                  detail: lead.productRequested,
+                                ),
+                                SizedBox(height: 23.h),
+                                const LeadProductDetailsWidget(
+                                  title: 'Product Sold',
+                                  detail: 'Mortgage Account',
+                                ),
+                                SizedBox(height: 23.h),
+                                const LeadProductDetailsWidget(
+                                  title: 'Lead Close Reason',
+                                  detail: 'Lost to competition',
+                                ),
+                                SizedBox(height: 23.h),
+                                const LeadProductDetailsWidget(
+                                  title: 'Recording Agent',
+                                  detail: 'Khary Fagbure',
+                                ),
+                                SizedBox(height: 23.h),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 30.h),
-                  Card(
-                    child: Padding(
-                      padding: EdgeInsets.all(36.r),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          LeadProfileTile(lead: lead),
-                          SizedBox(height: 30.h),
-                          const LeadDateDetailsWidget(
-                            title: 'Lead Created',
-                            date: '10 August 2022',
-                          ),
-                          SizedBox(height: 17.h),
-                          const LeadDateDetailsWidget(
-                            title: 'Last Contacted',
-                            date: '16 August 2022',
-                          ),
-                          SizedBox(height: 17.h),
-                          const LeadDateDetailsWidget(
-                            title: 'Next Appointment',
-                            date: '29 August 2022',
-                          ),
-                          SizedBox(height: 17.h),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 30.h),
-                  Card(
-                    child: Padding(
-                      padding: EdgeInsets.all(36.r),
-                      child: DefaultTabController(
-                        length: 2,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const TabBar(
-                              indicatorColor: LmsColors.buttonBackgroundColor,
-                              labelColor: LmsColors.pink,
-                              unselectedLabelColor: Color(0XFF666666),
-                              tabs: [
-                                Tab(text: 'Lead Details'),
-                                Tab(
-                                  text: 'Assigned Lead',
-                                ),
-                              ],
-                            ),
-                            const LeadProductDetailsWidget(
-                              title: 'Lead Source',
-                              detail: 'App',
-                            ),
-                            SizedBox(height: 23.h),
-                            LeadProductDetailsWidget(
-                              title: 'Product Requested',
-                              detail: lead.productRequested,
-                            ),
-                            SizedBox(height: 23.h),
-                            const LeadProductDetailsWidget(
-                              title: 'Product Sold',
-                              detail: 'Mortgage Account',
-                            ),
-                            SizedBox(height: 23.h),
-                            const LeadProductDetailsWidget(
-                              title: 'Lead Close Reason',
-                              detail: 'Lost to competition',
-                            ),
-                            SizedBox(height: 23.h),
-                            const LeadProductDetailsWidget(
-                              title: 'Recording Agent',
-                              detail: 'Khary Fagbure',
-                            ),
-                            SizedBox(height: 23.h),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+                ),
+              );
+            },
           ),
         );
       },

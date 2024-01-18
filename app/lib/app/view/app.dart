@@ -9,6 +9,7 @@ import 'package:lms_app/features/active_page/bloc/active_page_bloc.dart';
 import 'package:lms_app/features/authentication/auth/auth.dart';
 import 'package:lms_app/features/authentication/login/login.dart';
 import 'package:lms_app/features/authentication/sign_up/sign_up.dart';
+import 'package:lms_app/features/common/colors.dart';
 import 'package:lms_app/features/common/grpc-gen/agent_service.pbgrpc.dart';
 import 'package:lms_app/features/common/grpc-gen/interceptors.dart';
 import 'package:lms_app/features/common/grpc-gen/lead_service.pbgrpc.dart';
@@ -132,9 +133,19 @@ class App extends StatelessWidget {
             theme: FlexThemeData.light(
               scheme: schemeColor,
               fontFamily: textStyle.fontFamily,
+              primary: LmsColors.pink,
             ).copyWith(
               inputDecorationTheme: InputDecorationTheme(
+                outlineBorder: BorderSide(
+                  color: const Color(0XFFDFDEDE).withOpacity(0.5),
+                ),
                 border: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: const Color(0XFFDFDEDE).withOpacity(0.5),
+                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(10.h)),
+                ),
+                disabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10.h)),
                 ),
                 fillColor: Colors.white,

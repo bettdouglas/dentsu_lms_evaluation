@@ -40,18 +40,23 @@ class LeadsView extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.r),
               ),
               child: ListView.builder(
-                itemBuilder: (context, idx) => ListTile(
-                  title: Text(leads[idx].name),
-                  tileColor: idx.isOdd ? const Color(0XFFFAF8F8) : Colors.white,
-                  leading: Text((idx + 1).toString().padLeft(2, '0')),
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => LeadPage(lead: leads[idx]),
-                      ),
-                    );
-                  },
-                ),
+                itemBuilder: (context, idx) {
+                  final lead = leads[idx];
+                  return ListTile(
+                    title: Text(leads[idx].name),
+                    tileColor:
+                        idx.isOdd ? const Color(0XFFFAF8F8) : Colors.white,
+                    leading: Text((idx + 1).toString().padLeft(2, '0')),
+                    onTap: () {
+                      context.read<LeadBloc>().add(LeadEvent.loadLead(lead.id));
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => LeadPage(leadId: lead.id),
+                        ),
+                      );
+                    },
+                  );
+                },
                 itemCount: leads.length,
               ),
             );
