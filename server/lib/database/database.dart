@@ -72,6 +72,7 @@ class QuoteBenefits extends GenericTable {
   BoolColumn get lastExpense => boolean().nullable()();
   BoolColumn get personalAccident => boolean().nullable()();
   BoolColumn get covid19Cover => boolean().nullable()();
+  BoolColumn get amrefEvacuation => boolean().nullable()();
 }
 
 @DriftDatabase(

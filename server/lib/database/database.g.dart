@@ -2032,6 +2032,15 @@ class $QuoteBenefitsTable extends QuoteBenefits
       requiredDuringInsert: false,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
           'CHECK ("covid19_cover" IN (0, 1))'));
+  static const VerificationMeta _amrefEvacuationMeta =
+      const VerificationMeta('amrefEvacuation');
+  @override
+  late final GeneratedColumn<bool> amrefEvacuation = GeneratedColumn<bool>(
+      'amref_evacuation', aliasedName, true,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("amref_evacuation" IN (0, 1))'));
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -2046,7 +2055,8 @@ class $QuoteBenefitsTable extends QuoteBenefits
         maternity,
         lastExpense,
         personalAccident,
-        covid19Cover
+        covid19Cover,
+        amrefEvacuation
       ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -2121,6 +2131,12 @@ class $QuoteBenefitsTable extends QuoteBenefits
           covid19Cover.isAcceptableOrUnknown(
               data['covid19_cover']!, _covid19CoverMeta));
     }
+    if (data.containsKey('amref_evacuation')) {
+      context.handle(
+          _amrefEvacuationMeta,
+          amrefEvacuation.isAcceptableOrUnknown(
+              data['amref_evacuation']!, _amrefEvacuationMeta));
+    }
     return context;
   }
 
@@ -2156,6 +2172,8 @@ class $QuoteBenefitsTable extends QuoteBenefits
           .read(DriftSqlType.bool, data['${effectivePrefix}personal_accident']),
       covid19Cover: attachedDatabase.typeMapping
           .read(DriftSqlType.bool, data['${effectivePrefix}covid19_cover']),
+      amrefEvacuation: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}amref_evacuation']),
     );
   }
 
@@ -2180,6 +2198,7 @@ class QuoteBenefit extends DataClass implements Insertable<QuoteBenefit> {
   final bool? lastExpense;
   final bool? personalAccident;
   final bool? covid19Cover;
+  final bool? amrefEvacuation;
   const QuoteBenefit(
       {required this.id,
       required this.createdAt,
@@ -2193,7 +2212,8 @@ class QuoteBenefit extends DataClass implements Insertable<QuoteBenefit> {
       this.maternity,
       this.lastExpense,
       this.personalAccident,
-      this.covid19Cover});
+      this.covid19Cover,
+      this.amrefEvacuation});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -2229,6 +2249,9 @@ class QuoteBenefit extends DataClass implements Insertable<QuoteBenefit> {
     }
     if (!nullToAbsent || covid19Cover != null) {
       map['covid19_cover'] = Variable<bool>(covid19Cover);
+    }
+    if (!nullToAbsent || amrefEvacuation != null) {
+      map['amref_evacuation'] = Variable<bool>(amrefEvacuation);
     }
     return map;
   }
@@ -2267,6 +2290,9 @@ class QuoteBenefit extends DataClass implements Insertable<QuoteBenefit> {
       covid19Cover: covid19Cover == null && nullToAbsent
           ? const Value.absent()
           : Value(covid19Cover),
+      amrefEvacuation: amrefEvacuation == null && nullToAbsent
+          ? const Value.absent()
+          : Value(amrefEvacuation),
     );
   }
 
@@ -2287,6 +2313,7 @@ class QuoteBenefit extends DataClass implements Insertable<QuoteBenefit> {
       lastExpense: serializer.fromJson<bool?>(json['lastExpense']),
       personalAccident: serializer.fromJson<bool?>(json['personalAccident']),
       covid19Cover: serializer.fromJson<bool?>(json['covid19Cover']),
+      amrefEvacuation: serializer.fromJson<bool?>(json['amrefEvacuation']),
     );
   }
   @override
@@ -2306,6 +2333,7 @@ class QuoteBenefit extends DataClass implements Insertable<QuoteBenefit> {
       'lastExpense': serializer.toJson<bool?>(lastExpense),
       'personalAccident': serializer.toJson<bool?>(personalAccident),
       'covid19Cover': serializer.toJson<bool?>(covid19Cover),
+      'amrefEvacuation': serializer.toJson<bool?>(amrefEvacuation),
     };
   }
 
@@ -2322,7 +2350,8 @@ class QuoteBenefit extends DataClass implements Insertable<QuoteBenefit> {
           Value<bool?> maternity = const Value.absent(),
           Value<bool?> lastExpense = const Value.absent(),
           Value<bool?> personalAccident = const Value.absent(),
-          Value<bool?> covid19Cover = const Value.absent()}) =>
+          Value<bool?> covid19Cover = const Value.absent(),
+          Value<bool?> amrefEvacuation = const Value.absent()}) =>
       QuoteBenefit(
         id: id ?? this.id,
         createdAt: createdAt ?? this.createdAt,
@@ -2340,6 +2369,9 @@ class QuoteBenefit extends DataClass implements Insertable<QuoteBenefit> {
             : this.personalAccident,
         covid19Cover:
             covid19Cover.present ? covid19Cover.value : this.covid19Cover,
+        amrefEvacuation: amrefEvacuation.present
+            ? amrefEvacuation.value
+            : this.amrefEvacuation,
       );
   @override
   String toString() {
@@ -2356,7 +2388,8 @@ class QuoteBenefit extends DataClass implements Insertable<QuoteBenefit> {
           ..write('maternity: $maternity, ')
           ..write('lastExpense: $lastExpense, ')
           ..write('personalAccident: $personalAccident, ')
-          ..write('covid19Cover: $covid19Cover')
+          ..write('covid19Cover: $covid19Cover, ')
+          ..write('amrefEvacuation: $amrefEvacuation')
           ..write(')'))
         .toString();
   }
@@ -2375,7 +2408,8 @@ class QuoteBenefit extends DataClass implements Insertable<QuoteBenefit> {
       maternity,
       lastExpense,
       personalAccident,
-      covid19Cover);
+      covid19Cover,
+      amrefEvacuation);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -2392,7 +2426,8 @@ class QuoteBenefit extends DataClass implements Insertable<QuoteBenefit> {
           other.maternity == this.maternity &&
           other.lastExpense == this.lastExpense &&
           other.personalAccident == this.personalAccident &&
-          other.covid19Cover == this.covid19Cover);
+          other.covid19Cover == this.covid19Cover &&
+          other.amrefEvacuation == this.amrefEvacuation);
 }
 
 class QuoteBenefitsCompanion extends UpdateCompanion<QuoteBenefit> {
@@ -2409,6 +2444,7 @@ class QuoteBenefitsCompanion extends UpdateCompanion<QuoteBenefit> {
   final Value<bool?> lastExpense;
   final Value<bool?> personalAccident;
   final Value<bool?> covid19Cover;
+  final Value<bool?> amrefEvacuation;
   const QuoteBenefitsCompanion({
     this.id = const Value.absent(),
     this.createdAt = const Value.absent(),
@@ -2423,6 +2459,7 @@ class QuoteBenefitsCompanion extends UpdateCompanion<QuoteBenefit> {
     this.lastExpense = const Value.absent(),
     this.personalAccident = const Value.absent(),
     this.covid19Cover = const Value.absent(),
+    this.amrefEvacuation = const Value.absent(),
   });
   QuoteBenefitsCompanion.insert({
     this.id = const Value.absent(),
@@ -2438,6 +2475,7 @@ class QuoteBenefitsCompanion extends UpdateCompanion<QuoteBenefit> {
     this.lastExpense = const Value.absent(),
     this.personalAccident = const Value.absent(),
     this.covid19Cover = const Value.absent(),
+    this.amrefEvacuation = const Value.absent(),
   }) : quoteId = Value(quoteId);
   static Insertable<QuoteBenefit> custom({
     Expression<int>? id,
@@ -2453,6 +2491,7 @@ class QuoteBenefitsCompanion extends UpdateCompanion<QuoteBenefit> {
     Expression<bool>? lastExpense,
     Expression<bool>? personalAccident,
     Expression<bool>? covid19Cover,
+    Expression<bool>? amrefEvacuation,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -2468,6 +2507,7 @@ class QuoteBenefitsCompanion extends UpdateCompanion<QuoteBenefit> {
       if (lastExpense != null) 'last_expense': lastExpense,
       if (personalAccident != null) 'personal_accident': personalAccident,
       if (covid19Cover != null) 'covid19_cover': covid19Cover,
+      if (amrefEvacuation != null) 'amref_evacuation': amrefEvacuation,
     });
   }
 
@@ -2484,7 +2524,8 @@ class QuoteBenefitsCompanion extends UpdateCompanion<QuoteBenefit> {
       Value<bool?>? maternity,
       Value<bool?>? lastExpense,
       Value<bool?>? personalAccident,
-      Value<bool?>? covid19Cover}) {
+      Value<bool?>? covid19Cover,
+      Value<bool?>? amrefEvacuation}) {
     return QuoteBenefitsCompanion(
       id: id ?? this.id,
       createdAt: createdAt ?? this.createdAt,
@@ -2499,6 +2540,7 @@ class QuoteBenefitsCompanion extends UpdateCompanion<QuoteBenefit> {
       lastExpense: lastExpense ?? this.lastExpense,
       personalAccident: personalAccident ?? this.personalAccident,
       covid19Cover: covid19Cover ?? this.covid19Cover,
+      amrefEvacuation: amrefEvacuation ?? this.amrefEvacuation,
     );
   }
 
@@ -2544,6 +2586,9 @@ class QuoteBenefitsCompanion extends UpdateCompanion<QuoteBenefit> {
     if (covid19Cover.present) {
       map['covid19_cover'] = Variable<bool>(covid19Cover.value);
     }
+    if (amrefEvacuation.present) {
+      map['amref_evacuation'] = Variable<bool>(amrefEvacuation.value);
+    }
     return map;
   }
 
@@ -2562,7 +2607,8 @@ class QuoteBenefitsCompanion extends UpdateCompanion<QuoteBenefit> {
           ..write('maternity: $maternity, ')
           ..write('lastExpense: $lastExpense, ')
           ..write('personalAccident: $personalAccident, ')
-          ..write('covid19Cover: $covid19Cover')
+          ..write('covid19Cover: $covid19Cover, ')
+          ..write('amrefEvacuation: $amrefEvacuation')
           ..write(')'))
         .toString();
   }

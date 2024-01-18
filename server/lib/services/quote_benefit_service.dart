@@ -91,6 +91,11 @@ class QuoteBenefitService extends QuoteBenefitServiceBase {
           case 'covid_19_cover':
             got = got!.copyWith(covid19Cover: Value(quoteBenefit.covid19Cover));
             break;
+          case 'amref_evacuation':
+            got = got!.copyWith(
+              amrefEvacuation: Value(quoteBenefit.amrefEvacuation),
+            );
+            break;
           default:
         }
       }

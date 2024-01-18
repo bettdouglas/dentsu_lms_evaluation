@@ -49,6 +49,7 @@ message QuoteBenefit {
     bool personalAccident = 8;
     bool covid19Cover = 9;
     int32 id = 10;
+    bool amrefEvacuation = 11;
 }
 
 message Quote {
