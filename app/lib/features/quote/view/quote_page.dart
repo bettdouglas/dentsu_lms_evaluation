@@ -8,6 +8,8 @@ import 'package:lms_app/features/common/colors.dart';
 import 'package:lms_app/features/common/grpc-gen/models.pb.dart';
 import 'package:lms_app/features/common/widgets/app_bar.dart';
 import 'package:lms_app/features/common/widgets/error_message_widget.dart';
+import 'package:lms_app/features/edit_quote_benefits/bloc/edit_quote_benefits_bloc.dart';
+import 'package:lms_app/features/edit_quote_setup/bloc/edit_quote_setup_bloc.dart';
 import 'package:lms_app/features/lead/lead.dart';
 
 import '../quote.dart';
@@ -53,57 +55,83 @@ class QuoteView extends StatelessWidget {
                   context.read<QuoteBloc>().add(QuoteEvent.loadQuote(quoteId));
                 },
               ),
-              loaded: (quote) => DefaultTabController(
-                length: 3,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            'View Quote',
-                            style: Theme.of(context)
-                                .textTheme
-                                .headlineLarge
-                                ?.copyWith(
-                                    fontSize: 30.sp,
-                                    fontWeight: FontWeight.w500,
-                                    color: const Color(0XFF2D2D2D)),
+              loaded: (quote) => MultiBlocListener(
+                listeners: [
+                  BlocListener<EditQuoteBenefitsBloc, EditQuoteBenefitsState>(
+                    listener: (context, state) {
+                      state.maybeWhen(
+                        orElse: () {},
+                        edited: (_, quoteBenefit) {
+                          context.read<QuoteBloc>().add(QuoteEvent.quoteUpdated(
+                              quoteBenefit: quoteBenefit));
+                        },
+                      );
+                    },
+                  ),
+                  BlocListener<EditQuoteSetupBloc, EditQuoteSetupState>(
+                    listener: (context, state) {
+                      state.maybeWhen(
+                        orElse: () {},
+                        edited: (_, quoteSetup) {
+                          context.read<QuoteBloc>().add(
+                              QuoteEvent.quoteUpdated(quoteSetup: quoteSetup));
+                        },
+                      );
+                    },
+                  ),
+                ],
+                child: DefaultTabController(
+                  length: 3,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              'View Quote',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineLarge
+                                  ?.copyWith(
+                                      fontSize: 30.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: const Color(0XFF2D2D2D)),
+                            ),
+                            const Spacer(),
+                          ],
+                        ),
+                        SizedBox(height: 12.h),
+                        TabBar(
+                          indicatorColor: LmsColors.buttonBackgroundColor,
+                          labelColor: LmsColors.pink,
+                          unselectedLabelColor: const Color(0XFF666666),
+                          labelStyle: TextStyle(
+                            fontSize: 14.sp,
+                            height: 18.23.toFigmaHeight(14.sp),
+                            fontWeight: FontWeight.w500,
                           ),
-                          const Spacer(),
-                        ],
-                      ),
-                      SizedBox(height: 12.h),
-                      TabBar(
-                        indicatorColor: LmsColors.buttonBackgroundColor,
-                        labelColor: LmsColors.pink,
-                        unselectedLabelColor: const Color(0XFF666666),
-                        labelStyle: TextStyle(
-                          fontSize: 14.sp,
-                          height: 18.23.toFigmaHeight(14.sp),
-                          fontWeight: FontWeight.w500,
+                          unselectedLabelStyle: TextStyle(
+                            fontSize: 14.sp,
+                            height: 18.23.toFigmaHeight(14.sp),
+                            fontWeight: FontWeight.w500,
+                          ),
+                          labelPadding: EdgeInsets.zero,
+                          tabs: const [
+                            Tab(text: 'Quote Information'),
+                            Tab(text: 'Setup'),
+                            Tab(text: 'Benefits'),
+                          ],
                         ),
-                        unselectedLabelStyle: TextStyle(
-                          fontSize: 14.sp,
-                          height: 18.23.toFigmaHeight(14.sp),
-                          fontWeight: FontWeight.w500,
-                        ),
-                        labelPadding: EdgeInsets.zero,
-                        tabs: const [
-                          Tab(text: 'Quote Information'),
-                          Tab(text: 'Setup'),
-                          Tab(text: 'Benefits'),
-                        ],
-                      ),
-                      SizedBox(height: 40.h),
-                      AutoScaleTabBarView(
-                        children: [
-                          QuoteInformationTabBarView(quote: quote),
-                          QuoteSetupTabBarView(quote: quote),
-                          QuoteBenefitsTabBarView(quote: quote),
-                        ],
-                      )
-                    ],
+                        SizedBox(height: 40.h),
+                        AutoScaleTabBarView(
+                          children: [
+                            QuoteInformationTabBarView(quote: quote),
+                            QuoteSetupTabBarView(quote: quote),
+                            QuoteBenefitsTabBarView(quote: quote),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -362,6 +390,14 @@ class QuoteSetupTabBarView extends StatelessWidget {
               errorText: 'Age Bracket is required',
             ),
           ]),
+          onChanged: (ageBracket) {
+            context
+                .read<EditQuoteSetupBloc>()
+                .add(EditQuoteSetupEvent.editQuoteSetup(
+                  quoteSetup: quote.setup,
+                  ageBracket: ageBracket,
+                ));
+          },
         ),
         SizedBox(height: 26.h),
         Text(
@@ -397,6 +433,14 @@ class QuoteSetupTabBarView extends StatelessWidget {
               errorText: 'Inpatient Cover Limit is required',
             ),
           ]),
+          onChanged: (inPatientCoverLimit) {
+            context
+                .read<EditQuoteSetupBloc>()
+                .add(EditQuoteSetupEvent.editQuoteSetup(
+                  quoteSetup: quote.setup,
+                  inPatientCoverLimit: inPatientCoverLimit,
+                ));
+          },
         ),
         SizedBox(height: 26.h),
         Text(
@@ -431,6 +475,14 @@ class QuoteSetupTabBarView extends StatelessWidget {
               errorText: 'Spouse Covered Option is required',
             ),
           ]),
+          onChanged: (spouseCovered) {
+            context
+                .read<EditQuoteSetupBloc>()
+                .add(EditQuoteSetupEvent.editQuoteSetup(
+                  quoteSetup: quote.setup,
+                  spouseCovered: spouseCovered,
+                ));
+          },
         ),
         SizedBox(height: 26.h),
         Text(
@@ -466,6 +518,14 @@ class QuoteSetupTabBarView extends StatelessWidget {
               errorText: 'Number of children covered by scheme is required',
             ),
           ]),
+          onChanged: (numberOfChildrenCovered) {
+            context
+                .read<EditQuoteSetupBloc>()
+                .add(EditQuoteSetupEvent.editQuoteSetup(
+                  quoteSetup: quote.setup,
+                  numberOfChildrenCovered: numberOfChildrenCovered,
+                ));
+          },
         ),
         SizedBox(height: 26.h),
         Text(
@@ -500,6 +560,14 @@ class QuoteSetupTabBarView extends StatelessWidget {
               errorText: 'Should we cover the children',
             ),
           ]),
+          onChanged: (coverChildren) {
+            context
+                .read<EditQuoteSetupBloc>()
+                .add(EditQuoteSetupEvent.editQuoteSetup(
+                  quoteSetup: quote.setup,
+                  coverChildren: coverChildren,
+                ));
+          },
         ),
         SizedBox(height: 26.h),
         Text(
@@ -534,6 +602,14 @@ class QuoteSetupTabBarView extends StatelessWidget {
               errorText: 'Spouse Age Bracket is required',
             ),
           ]),
+          onChanged: (spouseAgeBracket) {
+            context
+                .read<EditQuoteSetupBloc>()
+                .add(EditQuoteSetupEvent.editQuoteSetup(
+                  quoteSetup: quote.setup,
+                  spouseAgeBracket: spouseAgeBracket,
+                ));
+          },
         ),
         SizedBox(height: 26.h),
       ],
@@ -590,6 +666,14 @@ class QuoteBenefitsTabBarView extends StatelessWidget {
               errorText: 'Inpatient Cover Limit is required',
             ),
           ]),
+          onChanged: (inPatientCoverLimit) {
+            context
+                .read<EditQuoteSetupBloc>()
+                .add(EditQuoteSetupEvent.editQuoteSetup(
+                  quoteSetup: quote.setup,
+                  inPatientCoverLimit: inPatientCoverLimit,
+                ));
+          },
         ),
         SizedBox(height: 26.h),
         Card(
@@ -615,55 +699,118 @@ class QuoteBenefitsTabBarView extends StatelessWidget {
                   benefit: ('Inpatient', 'inpatient'),
                   value: benefits.inPatient,
                   showDivider: true,
-                  onChanged: (value) {},
+                  onChanged: (inPatient) {
+                    context
+                        .read<EditQuoteBenefitsBloc>()
+                        .add(EditQuoteBenefitsEvent.editQuoteBenefits(
+                          quoteBenefit: quote.benefits,
+                          inPatient: inPatient,
+                        ));
+                  },
                 ),
                 BenefitSwitch(
                   benefit: ('No Co-payment', 'no_co_payment'),
                   value: benefits.noCoPayment,
                   showDivider: true,
-                  onChanged: (value) {},
+                  onChanged: (noCoPayment) {
+                    context
+                        .read<EditQuoteBenefitsBloc>()
+                        .add(EditQuoteBenefitsEvent.editQuoteBenefits(
+                          quoteBenefit: quote.benefits,
+                          noCoPayment: noCoPayment,
+                        ));
+                  },
                 ),
                 BenefitSwitch(
                   benefit: ('Dental', 'dental'),
                   value: benefits.dental,
                   showDivider: true,
-                  onChanged: (value) {},
+                  onChanged: (dental) {
+                    context
+                        .read<EditQuoteBenefitsBloc>()
+                        .add(EditQuoteBenefitsEvent.editQuoteBenefits(
+                          quoteBenefit: quote.benefits,
+                          dental: dental,
+                        ));
+                  },
                 ),
                 BenefitSwitch(
                   benefit: ('Optical', 'optical'),
                   value: benefits.optical,
                   showDivider: true,
-                  onChanged: (value) {},
+                  onChanged: (optical) {
+                    context
+                        .read<EditQuoteBenefitsBloc>()
+                        .add(EditQuoteBenefitsEvent.editQuoteBenefits(
+                          quoteBenefit: quote.benefits,
+                          optical: optical,
+                        ));
+                  },
                 ),
                 BenefitSwitch(
                   benefit: ('Maternity', 'maternity'),
                   value: benefits.maternity,
                   showDivider: true,
-                  onChanged: (value) {},
+                  onChanged: (maternity) {
+                    context
+                        .read<EditQuoteBenefitsBloc>()
+                        .add(EditQuoteBenefitsEvent.editQuoteBenefits(
+                          quoteBenefit: quote.benefits,
+                          maternity: maternity,
+                        ));
+                  },
                 ),
                 BenefitSwitch(
                   benefit: ('Last Expense', 'last_expense'),
                   value: benefits.lastExpense,
                   showDivider: true,
-                  onChanged: (value) {},
+                  onChanged: (lastExpense) {
+                    context
+                        .read<EditQuoteBenefitsBloc>()
+                        .add(EditQuoteBenefitsEvent.editQuoteBenefits(
+                          quoteBenefit: quote.benefits,
+                          lastExpense: lastExpense,
+                        ));
+                  },
                 ),
                 BenefitSwitch(
                   benefit: ('Personal Accident', 'personal_accident'),
                   value: benefits.personalAccident,
                   showDivider: true,
-                  onChanged: (value) {},
+                  onChanged: (personalAccident) {
+                    context
+                        .read<EditQuoteBenefitsBloc>()
+                        .add(EditQuoteBenefitsEvent.editQuoteBenefits(
+                          quoteBenefit: quote.benefits,
+                          personalAccident: personalAccident,
+                        ));
+                  },
                 ),
                 BenefitSwitch(
                   benefit: ('Enhanced Covid 19 Cover', 'covid_19_cover'),
-                  value: benefits.dental,
-                  showDivider: false,
-                  onChanged: (value) {},
+                  value: benefits.covid19Cover,
+                  showDivider: true,
+                  onChanged: (covid19Cover) {
+                    context
+                        .read<EditQuoteBenefitsBloc>()
+                        .add(EditQuoteBenefitsEvent.editQuoteBenefits(
+                          quoteBenefit: quote.benefits,
+                          covid19Cover: covid19Cover,
+                        ));
+                  },
                 ),
                 BenefitSwitch(
                   benefit: ('Amref Evacuation', 'amref_evacuation'),
                   value: benefits.amrefEvacuation,
                   showDivider: false,
-                  onChanged: (value) {},
+                  onChanged: (amrefEvacuation) {
+                    context
+                        .read<EditQuoteBenefitsBloc>()
+                        .add(EditQuoteBenefitsEvent.editQuoteBenefits(
+                          quoteBenefit: quote.benefits,
+                          amrefEvacuation: amrefEvacuation,
+                        ));
+                  },
                 ),
               ],
             ),

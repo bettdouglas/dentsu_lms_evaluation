@@ -16,42 +16,47 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$QuoteEvent {
-  int get id => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(int id) loadQuote,
+    required TResult Function(
+            QuoteBenefit? quoteBenefit, QuoteSetup? quoteSetup)
+        quoteUpdated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int id)? loadQuote,
+    TResult? Function(QuoteBenefit? quoteBenefit, QuoteSetup? quoteSetup)?
+        quoteUpdated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int id)? loadQuote,
+    TResult Function(QuoteBenefit? quoteBenefit, QuoteSetup? quoteSetup)?
+        quoteUpdated,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_LoadQuote value) loadQuote,
+    required TResult Function(_QuoteUpdated value) quoteUpdated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_LoadQuote value)? loadQuote,
+    TResult? Function(_QuoteUpdated value)? quoteUpdated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_LoadQuote value)? loadQuote,
+    TResult Function(_QuoteUpdated value)? quoteUpdated,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $QuoteEventCopyWith<QuoteEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -60,8 +65,6 @@ abstract class $QuoteEventCopyWith<$Res> {
   factory $QuoteEventCopyWith(
           QuoteEvent value, $Res Function(QuoteEvent) then) =
       _$QuoteEventCopyWithImpl<$Res, QuoteEvent>;
-  @useResult
-  $Res call({int id});
 }
 
 /// @nodoc
@@ -73,28 +76,13 @@ class _$QuoteEventCopyWithImpl<$Res, $Val extends QuoteEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$LoadQuoteImplCopyWith<$Res>
-    implements $QuoteEventCopyWith<$Res> {
+abstract class _$$LoadQuoteImplCopyWith<$Res> {
   factory _$$LoadQuoteImplCopyWith(
           _$LoadQuoteImpl value, $Res Function(_$LoadQuoteImpl) then) =
       __$$LoadQuoteImplCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({int id});
 }
@@ -155,6 +143,9 @@ class _$LoadQuoteImpl implements _LoadQuote {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(int id) loadQuote,
+    required TResult Function(
+            QuoteBenefit? quoteBenefit, QuoteSetup? quoteSetup)
+        quoteUpdated,
   }) {
     return loadQuote(id);
   }
@@ -163,6 +154,8 @@ class _$LoadQuoteImpl implements _LoadQuote {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int id)? loadQuote,
+    TResult? Function(QuoteBenefit? quoteBenefit, QuoteSetup? quoteSetup)?
+        quoteUpdated,
   }) {
     return loadQuote?.call(id);
   }
@@ -171,6 +164,8 @@ class _$LoadQuoteImpl implements _LoadQuote {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int id)? loadQuote,
+    TResult Function(QuoteBenefit? quoteBenefit, QuoteSetup? quoteSetup)?
+        quoteUpdated,
     required TResult orElse(),
   }) {
     if (loadQuote != null) {
@@ -183,6 +178,7 @@ class _$LoadQuoteImpl implements _LoadQuote {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_LoadQuote value) loadQuote,
+    required TResult Function(_QuoteUpdated value) quoteUpdated,
   }) {
     return loadQuote(this);
   }
@@ -191,6 +187,7 @@ class _$LoadQuoteImpl implements _LoadQuote {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_LoadQuote value)? loadQuote,
+    TResult? Function(_QuoteUpdated value)? quoteUpdated,
   }) {
     return loadQuote?.call(this);
   }
@@ -199,6 +196,7 @@ class _$LoadQuoteImpl implements _LoadQuote {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_LoadQuote value)? loadQuote,
+    TResult Function(_QuoteUpdated value)? quoteUpdated,
     required TResult orElse(),
   }) {
     if (loadQuote != null) {
@@ -211,11 +209,159 @@ class _$LoadQuoteImpl implements _LoadQuote {
 abstract class _LoadQuote implements QuoteEvent {
   const factory _LoadQuote(final int id) = _$LoadQuoteImpl;
 
-  @override
   int get id;
-  @override
   @JsonKey(ignore: true)
   _$$LoadQuoteImplCopyWith<_$LoadQuoteImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$QuoteUpdatedImplCopyWith<$Res> {
+  factory _$$QuoteUpdatedImplCopyWith(
+          _$QuoteUpdatedImpl value, $Res Function(_$QuoteUpdatedImpl) then) =
+      __$$QuoteUpdatedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({QuoteBenefit? quoteBenefit, QuoteSetup? quoteSetup});
+}
+
+/// @nodoc
+class __$$QuoteUpdatedImplCopyWithImpl<$Res>
+    extends _$QuoteEventCopyWithImpl<$Res, _$QuoteUpdatedImpl>
+    implements _$$QuoteUpdatedImplCopyWith<$Res> {
+  __$$QuoteUpdatedImplCopyWithImpl(
+      _$QuoteUpdatedImpl _value, $Res Function(_$QuoteUpdatedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? quoteBenefit = freezed,
+    Object? quoteSetup = freezed,
+  }) {
+    return _then(_$QuoteUpdatedImpl(
+      quoteBenefit: freezed == quoteBenefit
+          ? _value.quoteBenefit
+          : quoteBenefit // ignore: cast_nullable_to_non_nullable
+              as QuoteBenefit?,
+      quoteSetup: freezed == quoteSetup
+          ? _value.quoteSetup
+          : quoteSetup // ignore: cast_nullable_to_non_nullable
+              as QuoteSetup?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$QuoteUpdatedImpl implements _QuoteUpdated {
+  const _$QuoteUpdatedImpl({this.quoteBenefit, this.quoteSetup});
+
+  @override
+  final QuoteBenefit? quoteBenefit;
+  @override
+  final QuoteSetup? quoteSetup;
+
+  @override
+  String toString() {
+    return 'QuoteEvent.quoteUpdated(quoteBenefit: $quoteBenefit, quoteSetup: $quoteSetup)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$QuoteUpdatedImpl &&
+            (identical(other.quoteBenefit, quoteBenefit) ||
+                other.quoteBenefit == quoteBenefit) &&
+            (identical(other.quoteSetup, quoteSetup) ||
+                other.quoteSetup == quoteSetup));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, quoteBenefit, quoteSetup);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$QuoteUpdatedImplCopyWith<_$QuoteUpdatedImpl> get copyWith =>
+      __$$QuoteUpdatedImplCopyWithImpl<_$QuoteUpdatedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(int id) loadQuote,
+    required TResult Function(
+            QuoteBenefit? quoteBenefit, QuoteSetup? quoteSetup)
+        quoteUpdated,
+  }) {
+    return quoteUpdated(quoteBenefit, quoteSetup);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(int id)? loadQuote,
+    TResult? Function(QuoteBenefit? quoteBenefit, QuoteSetup? quoteSetup)?
+        quoteUpdated,
+  }) {
+    return quoteUpdated?.call(quoteBenefit, quoteSetup);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int id)? loadQuote,
+    TResult Function(QuoteBenefit? quoteBenefit, QuoteSetup? quoteSetup)?
+        quoteUpdated,
+    required TResult orElse(),
+  }) {
+    if (quoteUpdated != null) {
+      return quoteUpdated(quoteBenefit, quoteSetup);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_LoadQuote value) loadQuote,
+    required TResult Function(_QuoteUpdated value) quoteUpdated,
+  }) {
+    return quoteUpdated(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_LoadQuote value)? loadQuote,
+    TResult? Function(_QuoteUpdated value)? quoteUpdated,
+  }) {
+    return quoteUpdated?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_LoadQuote value)? loadQuote,
+    TResult Function(_QuoteUpdated value)? quoteUpdated,
+    required TResult orElse(),
+  }) {
+    if (quoteUpdated != null) {
+      return quoteUpdated(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _QuoteUpdated implements QuoteEvent {
+  const factory _QuoteUpdated(
+      {final QuoteBenefit? quoteBenefit,
+      final QuoteSetup? quoteSetup}) = _$QuoteUpdatedImpl;
+
+  QuoteBenefit? get quoteBenefit;
+  QuoteSetup? get quoteSetup;
+  @JsonKey(ignore: true)
+  _$$QuoteUpdatedImplCopyWith<_$QuoteUpdatedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

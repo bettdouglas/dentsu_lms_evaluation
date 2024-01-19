@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lms_app/features/active_page/bloc/active_page_bloc.dart';
+import 'package:lms_app/features/authentication/auth/auth.dart';
 import 'package:lms_app/features/common/widgets/action_button.dart';
 import 'package:lms_app/features/create_lead/create_lead.dart';
 import 'package:lms_app/features/create_quote/view/create_quote_page.dart';
@@ -77,11 +78,14 @@ class HomePage extends StatelessWidget {
               return HomePagePage(
                 title: 'Account',
                 actions: const [],
-                body: ListView.builder(
-                  itemBuilder: (_, idx) => ListTile(
-                    title: Text('Tile $idx'),
+                body: Center(
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      context.read<AuthBloc>().add(const AuthEvent.logout());
+                    },
+                    icon: const Icon(Icons.exit_to_app),
+                    label: const Text('Log out'),
                   ),
-                  itemCount: 100,
                 ),
               );
             }

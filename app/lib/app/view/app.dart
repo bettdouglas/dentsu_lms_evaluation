@@ -18,6 +18,8 @@ import 'package:lms_app/features/common/grpc-gen/quote_service.pbgrpc.dart';
 import 'package:lms_app/features/common/grpc-gen/quote_setup_service.pbgrpc.dart';
 import 'package:lms_app/features/create_lead/bloc/create_lead_bloc.dart';
 import 'package:lms_app/features/create_quote/bloc/create_quote_bloc.dart';
+import 'package:lms_app/features/edit_quote_benefits/bloc/edit_quote_benefits_bloc.dart';
+import 'package:lms_app/features/edit_quote_setup/bloc/edit_quote_setup_bloc.dart';
 import 'package:lms_app/features/lead/bloc/lead_bloc.dart';
 import 'package:lms_app/features/leads/bloc/leads_bloc.dart';
 import 'package:lms_app/features/quote/bloc/quote_bloc.dart';
@@ -127,7 +129,18 @@ class App extends StatelessWidget {
               create: (context) => CreateQuoteBloc(
                 quoteServiceClient: context.read<QuoteServiceClient>(),
               ),
-            )
+            ),
+            BlocProvider(
+              create: (context) => EditQuoteBenefitsBloc(
+                benefitServiceClient: context.read<QuoteBenefitServiceClient>(),
+              ),
+            ),
+            BlocProvider(
+              create: (context) => EditQuoteSetupBloc(
+                quoteSetupServiceClient:
+                    context.read<QuoteSetupServiceClient>(),
+              ),
+            ),
           ],
           child: MaterialApp(
             theme: FlexThemeData.light(
