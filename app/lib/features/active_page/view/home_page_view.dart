@@ -29,10 +29,22 @@ class HomePage extends StatelessWidget {
         return PageView.builder(
           itemBuilder: (context, pageIndex) {
             if (pageIndex == 0) {
-              return const HomePagePage(
+              return HomePagePage(
                 title: 'Dashboard',
-                actions: [],
-                body: LeadsPage(),
+                actions: const [],
+                body: ListView(children: [
+                  SizedBox(
+                    height: 320.h,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: const [
+                        TotalLeadsChartWidget(),
+                        LeadsLineGraph(),
+                      ],
+                    ),
+                  ),
+                  const LeadsPage(),
+                ]),
               );
             } else if (pageIndex == 1) {
               return HomePagePage(
