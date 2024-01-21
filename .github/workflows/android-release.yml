@@ -44,11 +44,16 @@ jobs:
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           ANDROID_KEYSTORE_ALIAS: ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
           ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-          
+        
+      - name: "List APKs"
+        run: |
+          ls -R build/app/outputs/flutter-apk/        
+
+
       - name: Create Github Releases
         uses: ncipollo/release-action@v1.13.0
         with:
-          artifacts: ${{ steps.build-apks.outputs.built-apk }}'
+          artifacts: build/app/outputs/flutter-apk/*.apk
 
       # - name: upload artifact to Firebase App Distribution
       #   uses: wzieba/Firebase-Distribution-Github-Action@v1
