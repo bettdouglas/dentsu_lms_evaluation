@@ -46,7 +46,7 @@ jobs:
       - name: Create Github Releases
         uses: ncipollo/release-action@v1.13.0
         with:
-          artifacts: "build/app/outputs/flutter-apk/*.apk,build/app/outputs/bundle/productionRelease/app-production-release.aab"
+          artifacts: "build/app/outputs/flutter-apk/*.apk"
 
       # - name: upload artifact to Firebase App Distribution
       #   uses: wzieba/Firebase-Distribution-Github-Action@v1
