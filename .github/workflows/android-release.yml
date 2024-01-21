@@ -48,7 +48,7 @@ jobs:
       - name: Create Github Releases
         uses: ncipollo/release-action@v1.13.0
         with:
-          artifacts: '${{ steps.build-apks.outputs.built-apk }}/*.apk'
+          artifacts: '${{ steps.build-apks.outputs.built-apk }}'
 
       # - name: upload artifact to Firebase App Distribution
       #   uses: wzieba/Firebase-Distribution-Github-Action@v1
