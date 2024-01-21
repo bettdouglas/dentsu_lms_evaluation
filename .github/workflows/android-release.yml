@@ -35,7 +35,9 @@ jobs:
             
       - name: "Build APKs"
         id: build-apks
-        run: 'flutter build apk -t lib/main.dart --split-per-abi && echo "::set-output name=built-apk::build/app/outputs/flutter-apk/"'
+        run: | 
+          flutter build apk -t lib/main.dart --split-per-abi
+          echo "{built-apk}={build/app/outputs/flutter-apk/}">> $GITHUB_OUTPUT
 
         env: 
           ANDROID_KEYSTORE_PATH: ${{ steps.decode_keystore.outputs.filePath }}
@@ -46,7 +48,7 @@ jobs:
       - name: Create Github Releases
         uses: ncipollo/release-action@v1.13.0
         with:
-          artifacts: '${{ steps.build-apks.outputs.built-apk }}'
+          artifacts: '${{ steps.build-apks.outputs.built-apk }}/*.apk'
 
       # - name: upload artifact to Firebase App Distribution
       #   uses: wzieba/Firebase-Distribution-Github-Action@v1
