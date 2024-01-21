@@ -34,8 +34,8 @@ jobs:
             
       - name: "Build APKs"
         run: |
-          flutter build apk --flavor production -t lib/main_production.dart --split-per-abi
-          flutter build appbundle --flavor production -t lib/main_production.dart
+          flutter build apk -t lib/main.dart --split-per-abi
+          flutter build appbundle -t lib/main.dart
 
         env: 
           ANDROID_KEYSTORE_PATH: ${{ steps.decode_keystore.outputs.filePath }}
