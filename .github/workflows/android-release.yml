@@ -1,0 +1,59 @@
+name: build_citizen_watch_android
+
+on:
+  push:
+    tags : 
+      - v*
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./app
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: subosito/flutter-action@v2.10.0
+        with:
+          flutter-version: '3.10.2'
+          channel: 'stable'
+
+      - name: Install Dependencies
+        run: flutter packages get
+      
+      
+      # - name: Run tests
+      #   run: flutter test --no-pub --coverage --test-randomize-ordering-seed random
+
+      - name: Decode Keystore
+        id: decode_keystore
+        uses: timheuer/base64-to-file@v1.2.3
+        with:
+          fileName: 'keystore/release_keystore.jks'
+          encodedString: ${{ secrets.KEYSTORE }}
+            
+      - name: "Build APKs"
+        run: |
+          flutter build apk --flavor production -t lib/main_production.dart --split-per-abi
+          flutter build appbundle --flavor production -t lib/main_production.dart
+
+        env: 
+          ANDROID_KEYSTORE_PATH: ${{ steps.decode_keystore.outputs.filePath }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEYSTORE_ALIAS: ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
+          ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          
+      - name: Create Github Releases
+        uses: ncipollo/release-action@v1.13.0
+        with:
+          artifacts: "build/app/outputs/flutter-apk/*.apk,build/app/outputs/bundle/productionRelease/app-production-release.aab"
+
+      # - name: upload artifact to Firebase App Distribution
+      #   uses: wzieba/Firebase-Distribution-Github-Action@v1
+      #   with:
+      #     appId: ${{secrets.FIREBASE_APP_ID}}
+      #     serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
+      #     releaseNotes: ${{ github.event.release.body }}
+      #     groups: internal
+      #     file: build/app/outputs/bundle/productionRelease/app-production-release.aab
