@@ -37,7 +37,7 @@ jobs:
         id: build-apks
         run: | 
           flutter build apk -t lib/main.dart --split-per-abi
-          echo "{built-apk}={build/app/outputs/flutter-apk/}">> $GITHUB_OUTPUT
+          echo "{built-apk}={build/app/outputs/flutter-apk/}" >> $GITHUB_OUTPUT
 
         env: 
           ANDROID_KEYSTORE_PATH: ${{ steps.decode_keystore.outputs.filePath }}
