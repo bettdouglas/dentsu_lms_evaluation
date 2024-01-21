@@ -16,9 +16,8 @@ jobs:
 
       - uses: subosito/flutter-action@v2.10.0
         with:
-          flutter-version: '3.10.2'
-          channel: 'stable'
-
+          flutter-version: '3.16.0-0.3.pre'
+          channel: 'any'
       - name: Install Dependencies
         run: flutter packages get
       
