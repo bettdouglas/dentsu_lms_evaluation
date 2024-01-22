@@ -31,7 +31,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final channel = buildGrpcChannel(
-      host: '0.0.0.0',
+      host: '5.189.181.244',
       port: 8181,
       secure: false,
     );

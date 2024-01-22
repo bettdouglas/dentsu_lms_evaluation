@@ -1,4 +1,4 @@
-# bereal_clone
+# dentsu_lms
 
 A new Flutter project.
 

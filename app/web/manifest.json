@@ -1,6 +1,6 @@
 {
-    "name": "bereal_clone",
-    "short_name": "bereal_clone",
+    "name": "dentsu_lms",
+    "short_name": "dentsu_lms",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
