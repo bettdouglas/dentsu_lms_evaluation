@@ -6,3 +6,4 @@
 
 kreya/
 server/*.sqlite
+build-apk.sh
