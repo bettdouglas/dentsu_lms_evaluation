@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:lms_app/features/common/colors.dart';
 import 'package:lms_app/features/common/grpc-gen/models.pb.dart';
@@ -815,7 +816,8 @@ class QuoteBenefitsTabBarView extends StatelessWidget {
               ],
             ),
           ),
-        )
+        ),
+        const MpesaPaymentCard(),
       ],
     );
   }
@@ -944,5 +946,125 @@ extension on Lead {
 
   String get lastName {
     return name.split(' ')[2];
+  }
+}
+
+class MpesaPaymentCard extends StatelessWidget {
+  const MpesaPaymentCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 450.h,
+      child: Card(
+        elevation: 0,
+        color: Colors.white,
+        child: Padding(
+          padding: EdgeInsets.all(26.r),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Text(
+                    'Premium Summary',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 18.sp,
+                    ),
+                  ),
+                  const Spacer(),
+                  SvgPicture.asset(
+                    'assets/svg/infograph.svg',
+                    color: LmsColors.buttonBackgroundColor,
+                  )
+                ],
+              ),
+              SizedBox(height: 38.h),
+              const Divider(),
+              Row(
+                children: [
+                  Text(
+                    "Total",
+                    style: TextStyle(
+                      fontSize: 15.sp,
+                      fontWeight: FontWeight.w500,
+                      height: 19.53.toFigmaHeight(15.sp),
+                    ),
+                  ),
+                  const Spacer(),
+                  Text(
+                    "KES 131,435",
+                    style: TextStyle(
+                      fontSize: 17.sp,
+                      fontWeight: FontWeight.w700,
+                      height: 22.13.toFigmaHeight(17.sp),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 38.h),
+              const Divider(),
+              RadioListTile<String>(
+                value: 'mpesa',
+                groupValue: 'mpesa',
+                onChanged: (val) {},
+                title: Text(
+                  'Mpesa Paybill',
+                  style: TextStyle(
+                    fontSize: 17.sp,
+                    fontWeight: FontWeight.w700,
+                    height: 22.13.toFigmaHeight(17.sp),
+                  ),
+                ),
+                secondary: Image.asset('assets/png/mpesa.png'),
+              ),
+              SizedBox(height: 36.h),
+              RadioListTile<String>(
+                value: 'visa',
+                groupValue: 'payment',
+                onChanged: (val) {},
+                title: Text(
+                  'Credit / Debit Card',
+                  style: TextStyle(
+                    fontSize: 17.sp,
+                    fontWeight: FontWeight.w700,
+                    height: 22.13.toFigmaHeight(17.sp),
+                  ),
+                ),
+                secondary: Image.asset('assets/png/visa.png'),
+              ),
+              SizedBox(height: 20.h),
+              InkWell(
+                onTap: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Not yet implemented'),
+                    ),
+                  );
+                },
+                child: Container(
+                  height: 36.h,
+                  width: 90.w,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: LmsColors.buttonBackgroundColor),
+                    borderRadius: BorderRadius.circular(10.r),
+                  ),
+                  child: Text(
+                    'Buy Now',
+                    style: TextStyle(
+                      color: LmsColors.buttonBackgroundColor,
+                      fontSize: 17.sp,
+                      fontWeight: FontWeight.w700,
+                      height: 22.13.toFigmaHeight(17.sp),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
